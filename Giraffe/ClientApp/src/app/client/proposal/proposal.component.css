@@ -1,0 +1,52 @@
+.statistic-percent {
+  border: 1px solid black;
+  min-height: 184px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.text-green {
+  color: green;
+}
+
+.border-green {
+  border: 2px solid green;
+}
+
+.border-danger_ {
+  border: 2px solid red;
+  margin-bottom: 50px;
+  margin-left: 50px;
+}
+
+.stamp {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  opacity: 0.7;
+  position: absolute;
+  font-size: 21px;
+  right: 1%;
+  top: 79%;
+  border-radius: 5%;
+  height: 60px;
+  font-weight: bold
+}
+
+.stamp-date {
+  font-size: 12px;
+  bottom: 10px;
+  font-weight: 400
+}
+
+.closeSignatureImagePosition {
+  right: 183px;
+  bottom: 16px;
+}
+
+@media (max-width: 759.98px) {
+  .stamp {
+    top: 140%;
+  }
+}

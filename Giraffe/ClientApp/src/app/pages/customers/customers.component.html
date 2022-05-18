@@ -1,0 +1,277 @@
+<!--Customers Main Panel-->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Customers list</h5>
+      </div>
+      <div class="card-body bg-light">
+        <div class="row">
+          <div class="col-12">
+            <ul class="nav nav-pills" id="pill-myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link" [class.active]="tabid==1" id="pill-tab-1" (click)="changeTab(1)"
+                   data-toggle="tab" href="#pill-tab-1" role="tab"
+                   aria-controls="pill-tab-1" aria-selected="true">
+                  List
+                </a>
+              </li>
+            </ul>
+            <div class="tab-content border mt-3" id="pill-myTabContent">
+              <div class="tab-pane fade" [class.show]="tabid==1" [class.active]="tabid==1" id="pill-tab-1"
+                   role="tabpanel" aria-labelledby="list-view-tab">
+                <div class="card shadow-none">
+                  <div [style.opacity]="loading ? '0' : '1'">
+                    <div class="card-header">
+                      <div class="row align-items-center justify-content-between">
+                        <div class="col-6 col-sm-auto d-flex align-items-center pr-0">
+                          <div id="DataTables_Table_0_filter"
+                               class="dataTables_filter d-sm-inline-block">
+                            <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchCustomer">
+                          </div>
+                        </div>
+                        <div class="col-6 col-sm-auto ml-auto text-right pl-0">
+                          <div class="d-none" id="orders-actions">
+                            <div class="input-group input-group-sm">
+                              <select class="custom-select cus"
+                                      aria-label="Bulk actions">
+                                <option selected="">Bulk actions</option>
+                                <option value="Refund">Refund</option>
+                                <option value="Delete">Delete</option>
+                              </select>
+                              <button class="btn btn-falcon-default ml-2"
+                                      type="button">
+                                Apply
+                              </button>
+                            </div>
+                          </div>
+                          <div id="dashboard-actions">
+                            <div class="btn-group d-none" id="customerBulkActions">
+                              <button class="btn dropdown-toggle btn-info mx-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fas fa-bars pt-1"></span>
+                                <span class="d-none d-sm-inline-block">Action</span>
+                              </button>
+                              <div class="dropdown-menu dropdown-edit">
+                                <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(0,'','',['customerBulk','c','customerStatus'])">Delete</a>
+                              </div>
+                            </div>
+                            <div class="btn-group" id="customerGroupButtons">
+                              <!--<button class="btn btn-success"
+                                      data-toggle="modal" type="button" (click)="editCustomer(0)">
+                                <span class="fas fa-plus"
+                                      data-fa-transform="shrink-3 down-2"></span>
+                                <span class="d-none d-sm-inline-block">
+                                  New Customer
+                                </span>
+                              </button>-->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body pt-0">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="falcon-data-table table-responsive">
+                            <table class="table table-sm table-dashboard data-table fs--1 border-bottom">
+                              <thead class="bg-200">
+                                <tr>
+                                  <th class="pr-1 align-middle min-w-50px">
+                                    <div class="custom-control custom-checkbox">
+                                      <input class="custom-control-input checkbox-bulk-select" id="customerBulk" type="checkbox"
+                                             data-checkbox-body="#customerTbody"
+                                             data-checkbox-actions="#customerBulkActions"
+                                             data-checkbox-replaced-element="#customerGroupButtons"
+                                             [disabled]="customerData?.length==0">
+                                      <label class="custom-control-label" for="customerBulk"></label>
+                                    </div>
+                                  </th>
+                                  <th class="pr-1 align-middle cursor-pointer min-w-100px"  (click)="sortType = 'name'; sortReverse = !sortReverse">
+                                    Name
+                                    <span *ngIf="sortType == 'name' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'name' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'name'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="pr-1 align-middle cursor-pointer min-w-100px" (click)="sortType = 'email'; sortReverse = !sortReverse">
+                                    Email
+                                    <span *ngIf="sortType == 'email' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'email' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'email'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="pr-1 align-middle cursor-pointer min-w-100px" (click)="sortType = 'phone'; sortReverse = !sortReverse">
+                                    Phone
+                                    <span *ngIf="sortType == 'phone' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'phone' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'phone'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="pr-1 align-middle cursor-pointer min-w-300px" (click)="sortType = 'address'; sortReverse = !sortReverse">
+                                    Billing Address
+                                    <span *ngIf="sortType == 'address' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'address' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'address'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="pr-1 align-middle cursor-pointer min-w-100px" (click)="sortType = 'creationDate'; sortReverse = !sortReverse">
+                                    Joined
+                                    <span *ngIf="sortType == 'creationDate' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'creationDate' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'creationDate'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="pr-1 align-middle min-w-50px">
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody id="customerTbody">
+                                <tr class="btn-reveal-trigger" *ngFor="let c of customerData |filter: searchCustomer | orderBy:sortType:sortReverse | paginate: listviewconfig">
+                                  <td class="align-middle">
+                                    <div class="custom-control custom-checkbox">
+                                      <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="c{{c.id}}" />
+                                      <label class="custom-control-label" for="c{{c.id}}"></label>
+                                    </div>
+                                  </td>
+                                  <th class="align-middle">
+                                    <a href="javascript:void(0)">
+                                      <!--(click)="editCustomer(c.id)"-->
+                                      {{c.name}}
+                                    </a>
+                                  </th>
+                                  <td class="align-middle">
+                                    {{c.email}}
+                                  </td>
+                                  <td class="align-middle">
+                                    {{c.phone}}
+                                  </td>
+                                  <td class="align-middle">
+                                    {{c.street}} {{c.city}} {{c.state}} {{c.zip}}
+                                  </td>
+                                  <td class="align-middle">
+                                    {{c.creationDate}}
+                                  </td>
+                                  <td class="align-middle white-space-nowrap">
+                                    <div class="dropdown text-sans-serif">
+                                      <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
+                                              type="button" id="dropdown0"
+                                              data-toggle="dropdown"
+                                              data-boundary="html"
+                                              aria-haspopup="true"
+                                              aria-expanded="false">
+                                        <span class="fas fa-ellipsis-h fs--1"></span>
+                                      </button>
+                                      <div class="dropdown-menu dropdown-menu-right border py-0"
+                                           aria-labelledby="dropdown0">
+                                        <div class="bg-white py-2">
+                                          <!--<a class="dropdown-item cursor-pointer" href="javascript:void(0)" (click)="editCustomer(c.id)">View / Edit</a>-->
+                                          <!--<div class="dropdown-divider"></div>-->
+                                          <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(c.id,'customerList','deleteCustomer',[])">Delete</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <table *ngIf="customerData?.length==0" class="w-100 text-center">
+                              <tr >
+                                <td colspan="14" class="p-2">
+                                  <p class="text-center bold-text font-size18px m-0">No data available</p>
+                                  <p class="text-center m-0 text-gray font-size13px">There is not data to show you right now</p>
+                                </td>
+                              </tr>
+                            </table>
+                            <pagination-template #p="paginationApi" [id]="listviewconfig.id" maxSize="5" (pageChange)="listviewconfig.currentPage = $event"
+                                                 (pageBoundsCorrection)="listviewconfig.currentPage = $event">
+                              <div class="row mx-1 align-items-center justify-content-center justify-content-md-between" *ngIf="p.pages?.length > 0">
+                                <div class="col-auto mb-2 mb-sm-0">
+                                  <div class="dataTables_info">
+                                    Showing {{((p.getCurrent()-1)*listviewconfig.itemsPerPage)+1}}
+                                    to {{(p.getCurrent()*listviewconfig.itemsPerPage) < p.getTotalItems() ? (p.getCurrent()*listviewconfig.itemsPerPage) : p.getTotalItems()}} of {{p.getTotalItems()}} entries
+                                  </div>
+                                </div>
+                                <div class="col-auto">
+                                  <div class="paging_simple_numbers pt-3">
+                                    <ul class="pagination pagination-sm">
+                                      <li class="paginate_button page-item previous" [class.disabled]="p.isFirstPage()">
+                                        <a class="page-link" (click)="p.previous()"> < </a>
+                                      </li>
+                                      <li class="paginate_button page-item" *ngFor="let page of p.pages" [class.active]="p.getCurrent() === page.value">
+                                        <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</a>
+                                        <a class="page-link" *ngIf="p.getCurrent() === page.value">{{ page.label }}</a>
+                                      </li>
+                                      <li class="paginate_button page-item next" [class.disabled]="p.isLastPage()">
+                                        <a class="page-link" (click)="p.next()"> > </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </pagination-template>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ngx-loading [show]="loading" class="z-index1000"></ngx-loading>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Confirmation-->
+<div class="modal fade z-index10001 pr-0" style="padding-right:0!important" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     data-backdrop="static" data-keyboard="true" aria-hidden="true">
+
+  <div class="modal-dialog modal-dialog-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Delete</h5>
+        <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close"><span class="font-weight-light" aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure want to delete {{delCount}} item(s)?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary btn-sm" type="button" (click)="deleteItem(delId,delType,delType2,delBulkArray)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

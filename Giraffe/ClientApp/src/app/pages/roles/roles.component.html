@@ -1,0 +1,294 @@
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Roles & Permissions</h5>
+      </div>
+      <div class="card-body bg-light">
+        <div class="row">
+          <div class="col-12">
+            <div class="card shadow-none">
+              <div [style.opacity]="loading ? '0' : '1'">
+                <div class="card-header">
+                  <div class="row align-items-center justify-content-between">
+                    <div class="col-6 col-sm-auto d-flex align-items-center pr-0">
+                      <div id="DataTables_Table_0_filter"
+                           class="dataTables_filter d-sm-inline-block">
+                        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchRole">
+                      </div>
+                    </div>
+                    <div class="col-6 col-sm-auto ml-auto text-right pl-0">
+                      <div class="d-none" id="orders-actions">
+                        <div class="input-group input-group-sm">
+                          <select class="custom-select cus"
+                                  aria-label="Bulk actions">
+                            <option selected="">Bulk actions</option>
+                            <option value="Refund">Refund</option>
+                            <option value="Delete">Delete</option>
+                          </select>
+                          <button class="btn btn-falcon-default ml-2"
+                                  type="button">
+                            Apply
+                          </button>
+                        </div>
+                      </div>
+                      <div id="dashboard-actions">
+                        <div class="btn-group d-none" id="roleBulkActions">
+                          <button class="btn dropdown-toggle btn-info mx-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-bars pt-1"></span>
+                            <span class="d-none d-sm-inline-block">Action</span>
+                          </button>
+                          <div class="dropdown-menu dropdown-edit">
+                            <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(0,'','',['roleBulk','r','roleStatus'])">Delete</a>
+                          </div>
+                        </div>
+                        <div class="btn-group" id="roleGroupButtons">
+                          <button class="btn btn-success"
+                                  data-toggle="modal" type="button" (click)="editRole(0)">
+                            <span class="fas fa-plus"
+                                  data-fa-transform="shrink-3 down-2"></span>
+                            <span class="d-none d-sm-inline-block">
+                              New Role
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="falcon-data-table table-responsive">
+                        <table class="table table-sm table-dashboard data-table fs--1 border-bottom">
+                          <thead class="bg-200">
+                            <tr>
+                              <th class="pr-1 align-middle">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input checkbox-bulk-select" id="roleBulk" type="checkbox"
+                                         data-checkbox-body="#roleTbody"
+                                         data-checkbox-actions="#roleBulkActions"
+                                         data-checkbox-replaced-element="#roleGroupButtons"
+                                         [disabled]="roleData?.length==0">
+                                  <label class="custom-control-label" for="roleBulk"></label>
+                                </div>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'name'; sortReverse = !sortReverse">
+                                Role
+                                <span *ngIf="sortType == 'name' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'name' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'name'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'count'; sortReverse = !sortReverse">
+                                Users
+                                <span *ngIf="sortType == 'count' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'count' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'count'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle">
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="roleTbody">
+                            <tr class="btn-reveal-trigger" *ngFor="let r of roleData |filter: searchRole | orderBy:sortType:sortReverse | paginate: roleConfig">
+                              <td class="align-middle">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="r{{r.id}}" />
+                                  <label class="custom-control-label" for="r{{r.id}}"></label>
+                                </div>
+                              </td>
+                              <th class="align-middle">
+                                <a href="javascript:void(0)" (click)="editRole(r.id)">
+                                  {{r.name}}
+                                </a>
+                              </th>
+                              <td class="align-middle">
+                                {{r.count}}
+                              </td>
+                              <td class="align-middle white-space-nowrap">
+                                <div class="dropdown text-sans-serif">
+                                  <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
+                                          type="button" id="dropdown0"
+                                          data-toggle="dropdown"
+                                          data-boundary="html"
+                                          aria-haspopup="true"
+                                          aria-expanded="false">
+                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-right border py-0"
+                                       aria-labelledby="dropdown0">
+                                    <div class="bg-white py-2">
+                                      <a class="dropdown-item cursor-pointer" href="javascript:void(0)" (click)="editRole(r.id)">View / Edit</a>
+                                      <div class="dropdown-divider"></div>
+                                      <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete( r.id,'role','deleteRole',[])">Delete</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <table *ngIf="roleData?.length==0" class="w-100 text-center">
+                          <tr>
+                            <td colspan="14" class="p-2">
+                              <p class="text-center bold-text font-size18px m-0">No data available</p>
+                              <p class="text-center m-0 text-gray font-size13px">There is not data to show you right now</p>
+                            </td>
+                          </tr>
+                        </table>
+                        <pagination-template #p="paginationApi" [id]="roleConfig.id" maxSize="5" (pageChange)="roleConfig.currentPage = $event"
+                                             (pageBoundsCorrection)="roleConfig.currentPage = $event">
+                          <div class="row mx-1 align-items-center justify-content-center justify-content-md-between" *ngIf="p.pages?.length > 0">
+                            <div class="col-auto mb-2 mb-sm-0">
+                              <div class="dataTables_info">
+                                Showing {{((p.getCurrent()-1)*roleConfig.itemsPerPage)+1}}
+                                to {{(p.getCurrent()*roleConfig.itemsPerPage) < p.getTotalItems() ? (p.getCurrent()*roleConfig.itemsPerPage) : p.getTotalItems()}} of {{p.getTotalItems()}} entries
+                              </div>
+                            </div>
+                            <div class="col-auto">
+                              <div class="paging_simple_numbers pt-3">
+                                <ul class="pagination pagination-sm">
+                                  <li class="paginate_button page-item previous" [class.disabled]="p.isFirstPage()">
+                                    <a class="page-link" (click)="p.previous()"> < </a>
+                                  </li>
+                                  <li class="paginate_button page-item" *ngFor="let page of p.pages" [class.active]="p.getCurrent() === page.value">
+                                    <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</a>
+                                    <a class="page-link" *ngIf="p.getCurrent() === page.value">{{ page.label }}</a>
+                                  </li>
+                                  <li class="paginate_button page-item next" [class.disabled]="p.isLastPage()">
+                                    <a class="page-link" (click)="p.next()"> > </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </pagination-template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ngx-loading [show]="loading"></ngx-loading>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal User-->
+<div class="modal fade px-0" style="padding-left:0!important;padding-right:0!important" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModal" data-backdrop="static" data-keyboard="true"
+     aria-hidden="true">
+  <div class="modal-dialog activity-select-modal-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Role Details
+        </h5>
+        <button class="close" type="button" aria-label="Close" (click)="modalRoleClose()">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="userModal" id="userModalBody">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group" [ngClass]="{'invalid':!roleObj.name}">
+              <label for="name">Name *</label>
+              <input class="form-control" id="name" type="text" [(ngModel)]="roleObj.name" required appTrimLeft autocomplete="off" />
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card-body pt-2 pb-0 px-0" *ngFor="let mn of roleObj.menus;let index = index">
+              <div class="row">
+                <div class="col-sm-6">
+                  {{mn.caption}}
+                </div>
+                <div class="col-sm-6">
+                  <div class="custom-control custom-switch">
+                    <input class="custom-control-input" type="checkbox" id="menu{{index}}" [(ngModel)]="mn.status" (change)="changeMenuStatus(index,mn.status)"/>
+                    <label class="custom-control-label cursor-pointer" for="menu{{index}}">Off/On</label>
+                  </div>
+                </div>
+              </div>
+              <div class="dashboard-data-table table-responsive" style="border-top: 1px solid black;" *ngIf="mn.subMenus?.length!=0 && mn.id!=9 && mn.id!=14">
+                <table class="table table-sm table-dashboard fs--1 data-table border-bottom">
+                  <thead>
+                    <tr>
+                      <th>
+                        Pages
+                      </th>
+                      <th class="text-center">
+                        See Own
+                      </th>
+                      <th class="text-center">
+                        See All
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="btn-reveal-trigger" *ngFor="let sbm of mn.subMenus;let index2 = index">
+                      <td class="align-middle">
+                        {{sbm.caption}}
+                      </td>
+                      <td class="align-middle text-center">
+                        <div class="custom-control custom-switch">
+                          <input class="custom-control-input" type="checkbox" id="seeOwn{{sbm.id}}" [(ngModel)]="sbm.seeOwn" (change)="changeSeeOwn(index,index2,sbm.seeOwn)" [disabled]="!mn.status"/>
+                          <label class="custom-control-label cursor-pointer" for="seeOwn{{sbm.id}}"></label>
+                        </div>
+                      </td>
+                      <td class="align-middle text-center">
+                        <div class="custom-control custom-switch">
+                          <input class="custom-control-input" type="checkbox" id="seeAll{{sbm.id}}" [(ngModel)]="sbm.seeAll" (change)="changeSeeAll(index,index2,sbm.seeAll)" [disabled]="!mn.status"/>
+                          <label class="custom-control-label cursor-pointer" for="seeAll{{sbm.id}}"></label>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" (click)="modalRoleClose()">Close</button>
+        <button class="btn btn-primary" id="btnUser" type="button" [disabled]="!roleObj.name" (click)="saveRole()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete-->
+<div class="modal fade z-index10000 a" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true" data-keyboard="true">
+  <div class="modal-dialog modal-dialog-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Delete</h5>
+        <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close"><span class="font-weight-light" aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure want to delete {{delCount}} item(s)?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary btn-sm" type="button" (click)="deleteItem(delId,delType,delType2,delBulkArray)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giraffe", "Giraffe\Giraffe.csproj", "{B561BBFF-A6C9-40D4-9FC5-A99E3E392177}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B561BBFF-A6C9-40D4-9FC5-A99E3E392177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B561BBFF-A6C9-40D4-9FC5-A99E3E392177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B561BBFF-A6C9-40D4-9FC5-A99E3E392177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B561BBFF-A6C9-40D4-9FC5-A99E3E392177}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2AE7B88B-E642-46B4-8186-412C63967206}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://dev.azure.com/suleyman2017
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Giraffe\\Giraffe.csproj
+		SccProjectName1 = Giraffe
+		SccLocalPath1 = Giraffe
+	EndGlobalSection
+EndGlobal

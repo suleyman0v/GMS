@@ -1,0 +1,14 @@
+.dropdown-edit {
+  padding: 0.5rem 0 !important;
+  left: -60px !important;
+}
+
+::placeholder {
+  font-size: 16px
+}
+
+@media (max-width: 575.98px) {
+  ::placeholder {
+    font-size: 14px
+  }
+}

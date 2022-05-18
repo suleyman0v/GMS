@@ -1,0 +1,349 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Presentations</h5>
+      </div>
+      <div class="card-body bg-light">
+        <div class="row">
+          <div class="col-12">
+            <div class="card shadow-none">
+              <div [style.opacity]="loading ? '0' : '1'">
+                <div class="card-header">
+                  <div class="row align-items-center justify-content-between">
+                    <div class="col-6 col-sm-auto d-flex align-items-center pr-0">
+                      <div id="DataTables_Table_0_filter"
+                           class="dataTables_filter d-sm-inline-block">
+                        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchPresentation" appTrimLeft>
+                      </div>
+                    </div>
+                    <div class="col-6 col-sm-auto ml-auto text-right pl-0">
+                      <div class="d-none" id="orders-actions">
+                        <div class="input-group input-group-sm">
+                          <select class="custom-select cus"
+                                  aria-label="Bulk actions">
+                            <option selected="">Bulk actions</option>
+                            <option value="Refund">Refund</option>
+                            <option value="Delete">Delete</option>
+                          </select>
+                          <button class="btn btn-falcon-default ml-2"
+                                  type="button">
+                            Apply
+                          </button>
+                        </div>
+                      </div>
+                      <div id="dashboard-actions">
+                        <div class="btn-group d-none" id="presentationBulkActions">
+                          <button class="btn dropdown-toggle btn-info mx-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-bars pt-1"></span>
+                            <span class="d-none d-sm-inline-block">Action</span>
+                          </button>
+                          <div class="dropdown-menu dropdown-edit">
+                            <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(0,'','',['presentationBulk','p','presentationStatus'])">Delete</a>
+                          </div>
+                        </div>
+                        <div class="btn-group" id="presentationGroupButtons">
+                          <button class="btn btn-success"
+                                  data-toggle="modal" type="button" (click)="editPresentation(0)">
+                            <span class="fas fa-plus"
+                                  data-fa-transform="shrink-3 down-2"></span>
+                            <span class="d-none d-sm-inline-block">
+                              New Presentation
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="falcon-data-table table-responsive">
+                        <table class="table table-sm table-dashboard data-table fs--1 border-bottom">
+                          <thead class="bg-200">
+                            <tr>
+                              <th class="pr-1 align-middle">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input checkbox-bulk-select" id="presentationBulk" type="checkbox"
+                                         data-checkbox-body="#presentationTbody"
+                                         data-checkbox-actions="#presentationBulkActions"
+                                         data-checkbox-replaced-element="#presentationGroupButtons"
+                                         [disabled]="presentationData?.length==0">
+                                  <label class="custom-control-label" for="presentationBulk"></label>
+                                </div>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'name'; sortReverse = !sortReverse">
+                                Name
+                                <span *ngIf="sortType == 'name' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'name' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'name'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'desc'; sortReverse = !sortReverse">
+                                Desc
+                                <span *ngIf="sortType == 'desc' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'desc' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'desc'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'createDate'; sortReverse = !sortReverse">
+                                Create Date
+                                <span *ngIf="sortType == 'createDate' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'createDate' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'createDate'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'type'; sortReverse = !sortReverse">
+                                Type
+                                <span *ngIf="sortType == 'type' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'type' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'type'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'status'; sortReverse = !sortReverse">
+                                Status
+                                <span *ngIf="sortType == 'status' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'status' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'status'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle">
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="presentationTbody">
+                            <tr class="btn-reveal-trigger" *ngFor="let p of presentationData |filter: searchPresentation | orderBy:sortType:sortReverse | paginate: presentationConfig">
+                              <td class="align-middle">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="p{{p.id}}" />
+                                  <label class="custom-control-label" for="p{{p.id}}"></label>
+                                </div>
+                              </td>
+                              <th class="align-middle">
+                                <a href="javascript:void(0)" (click)="presentationView(p.file)">
+                                  {{p.name}}
+                                </a>
+                              </th>
+                              <td class="align-middle">
+                                {{p.desc}}
+                              </td>
+                              <td class="align-middle">
+                                {{p.createDate}}
+                              </td>
+                              <td class="align-middle">
+                                {{p.type}}
+                              </td>
+                              <td class="align-middle">
+                                <div class="custom-control custom-switch">
+                                  <input class="custom-control-input" type="checkbox" id="switch{{p.id}}" [(ngModel)]="p.status" (change)="changeStatus('presentation',p.id, p.status,'changeStatus')" />
+                                  <label class="custom-control-label cursor-pointer" for="switch{{p.id}}"></label>
+                                </div>
+                              </td>
+                              <td class="align-middle white-space-nowrap">
+                                <div class="dropdown text-sans-serif">
+                                  <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
+                                          type="button" id="dropdown0"
+                                          data-toggle="dropdown"
+                                          data-boundary="html"
+                                          aria-haspopup="true"
+                                          aria-expanded="false">
+                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-right border py-0"
+                                       aria-labelledby="dropdown0">
+                                    <div class="bg-white py-2">
+                                      <a class="dropdown-item cursor-pointer" href="javascript:void(0)" (click)="editPresentation(p.id)">View / Edit</a>
+                                      <div class="dropdown-divider"></div>
+                                      <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete( p.id,'presentation','deletePresentation',[])">Delete</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <table *ngIf="presentationData?.length==0" class="w-100 text-center">
+                          <tr>
+                            <td colspan="14" class="p-2">
+                              <p class="text-center font-bold font-size18px m-0">No data available</p>
+                              <p class="text-center m-0 text-gray font-size13px">There is not data to show you right now</p>
+                            </td>
+                          </tr>
+                        </table>
+                        <pagination-template #p="paginationApi" [id]="presentationConfig.id" maxSize="5" (pageChange)="presentationConfig.currentPage = $event"
+                                             (pageBoundsCorrection)="presentationConfig.currentPage = $event">
+                          <div class="row mx-1 align-items-center justify-content-center justify-content-md-between" *ngIf="p.pages?.length > 0">
+                            <div class="col-auto mb-2 mb-sm-0">
+                              <div class="dataTables_info">
+                                Showing {{((p.getCurrent()-1)*presentationConfig.itemsPerPage)+1}}
+                                to {{(p.getCurrent()*presentationConfig.itemsPerPage) < p.getTotalItems() ? (p.getCurrent()*presentationConfig.itemsPerPage) : p.getTotalItems()}} of {{p.getTotalItems()}} entries
+                              </div>
+                            </div>
+                            <div class="col-auto">
+                              <div class="paging_simple_numbers pt-3">
+                                <ul class="pagination pagination-sm">
+                                  <li class="paginate_button page-item previous" [class.disabled]="p.isFirstPage()">
+                                    <a class="page-link" (click)="p.previous()"> < </a>
+                                  </li>
+                                  <li class="paginate_button page-item" *ngFor="let page of p.pages" [class.active]="p.getCurrent() === page.value">
+                                    <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</a>
+                                    <a class="page-link" *ngIf="p.getCurrent() === page.value">{{ page.label }}</a>
+                                  </li>
+                                  <li class="paginate_button page-item next" [class.disabled]="p.isLastPage()">
+                                    <a class="page-link" (click)="p.next()"> > </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </pagination-template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ngx-loading [show]="loading"></ngx-loading>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal User-->
+<div class="modal fade px-0" style="padding-left:0!important;padding-right:0!important" id="presentationModal" tabindex="-1" role="dialog" aria-labelledby="userModal" data-backdrop="static" data-keyboard="true"
+     aria-hidden="true">
+  <div class="modal-dialog activity-select-modal-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Presentation Details
+        </h5>
+        <button class="close" type="button" aria-label="Close" (click)="modalPresentationClose()">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="presentationModal" id="presentationModalBody">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':!presentationObj.name}">
+              <label for="name">Name *</label>
+              <input class="form-control" id="name" type="text" [(ngModel)]="presentationObj.name" required="required" appTrimLeft autocomplete="off" />
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':!presentationFile}">
+              <label for="lastName">File *</label>
+              <input class="form-control overflow-hidden pr-1" id="file" type="file" accept="application/pdf,application/vnd.ms-excel" (change)="handleFileInput($event.target.files)" [(ngModel)]="presentationFile" required="required" autocomplete="off" />
+            </div>
+          </div>
+          <div class="col-12" *ngIf="fileType==1">
+            <div class="validation text-right">
+              You can input  only Pdf format file
+            </div>
+          </div>
+          <div class=" col-12">
+            <div class="form-group">
+              <label for="desc">Description</label> <i *ngIf="presentationFileOpe==1" class="fas fa-file-pdf float-right"></i>
+              <textarea class="form-control" id="desc" type="text" [(ngModel)]="presentationObj.desc" appTrimLeft></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" (click)="modalPresentationClose()">Close</button>
+        <button class="btn btn-primary" id="btnPresentation" type="button" [disabled]="!presentationObj.name || !presentationObj.file" (click)="savePresentation()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal Presentation-->
+<div class="modal fade px-0" style="padding-left:0!important;padding-right:0!important"
+     id="presentationView" tabindex="-1" role="dialog" aria-labelledby="presentationView" data-backdrop="static" data-keyboard="true"
+     aria-hidden="true">
+  <div class="modal-dialog pdf-view-modal-width" role="document">
+    <div class="presentation-modal-content presentation-normal-size-border"> 
+      <div class="modal-header" *ngIf="fullScreenOpe==0">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Presentation View
+        </h5>
+        <button class="close" type="button" aria-label="Close" data-dismiss="modal">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body position-relative" name="presentationModal" id="presentationModalBody">
+        <button class="close position-absolute right50px text-dark z-index1000" type="button" *ngIf="fullScreenOpe==1">
+          <span class="font-weight-light position-fixed p-1" (click)="fullScreenOperation(1)">&times;</span>
+        </button>
+        <button class="close position-absolute right50px text-dark z-index1000" type="button" *ngIf="fullScreenOpe==0">
+          <span (click)="fullScreenOperation(0)"><i class="fas fa-expand"></i></span>
+        </button>
+        <div class="row">
+          <div class="col-12">
+            <div class="pdf-container overflow-auto" style="height: 70vh;">
+              <pdf-viewer [src]="pdfViewSrc"
+                          (after-load-complete)="afterRenderPresentation()"
+                          [autoresize]="true"
+                          [show-all]="true"
+                          [original-size]="false"
+                          [render-text]='true'
+                          [fit-to-page]="true"
+                          style="display:block">
+              </pdf-viewer>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" *ngIf="fullScreenOpe==0">
+        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Delete-->
+<div class="modal fade z-index10000 a" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true" data-keyboard="true">
+  <div class="modal-dialog modal-dialog-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Delete</h5>
+        <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close"><span class="font-weight-light" aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure want to delete {{delCount}} item(s)?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary btn-sm" type="button" (click)="deleteItem(delId,delType,delType2,delBulkArray)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+

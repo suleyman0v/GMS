@@ -1,0 +1,262 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Service Groups</h5>
+      </div>
+      <div class="card-body bg-light">
+        <div class="row">
+          <div class="col-12">
+            <div class="card shadow-none">
+              <div [style.opacity]="loading ? '0' : '1'">
+                <div class="card-header">
+                  <div class="row align-items-center justify-content-between">
+                    <div class="col-6 col-sm-auto d-flex align-items-center pr-0">
+                      <div id="DataTables_Table_0_filter"
+                           class="dataTables_filter d-sm-inline-block">
+                        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchServiceGroup">
+                      </div>
+                    </div>
+                    <div class="col-6 col-sm-auto ml-auto text-right pl-0">
+                      <div class="d-none" id="orders-actions">
+                        <div class="input-group input-group-sm">
+                          <select class="custom-select cus"
+                                  aria-label="Bulk actions">
+                            <option selected="">Bulk actions</option>
+                            <option value="Refund">Refund</option>
+                            <option value="Delete">Delete</option>
+                          </select>
+                          <button class="btn btn-falcon-default ml-2"
+                                  type="button">
+                            Apply
+                          </button>
+                        </div>
+                      </div>
+                      <div id="dashboard-actions">
+                        <div class="btn-group d-none" id="serviceGroupBulkActions">
+                          <button class="btn dropdown-toggle btn-info mx-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-bars pt-1"></span>
+                            <span class="d-none d-sm-inline-block">Action</span>
+                          </button>
+                          <div class="dropdown-menu dropdown-edit">
+                            <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(0,'','',['serviceGroupBulk','sg','serviceGroupStatus'])">Delete</a>
+                            <!--(click)="bulkActions('serviceGroupBulk','sg','serviceGroupStatus')"-->
+                          </div>
+                        </div>
+                        <div class="btn-group" id="serviceGroupButtons">
+                          <button class="btn btn-success"
+                                  data-toggle="modal" type="button" (click)="editServiceGroup(0)">
+                            <span class="fas fa-plus"
+                                  data-fa-transform="shrink-3 down-2"></span>
+                            <span class="d-none d-sm-inline-block">
+                              New Service Group
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="falcon-data-table table-responsive">
+                        <table class="table table-sm table-dashboard data-table fs--1 border-bottom">
+                          <thead class="bg-200">
+                            <tr>
+                              <th class="pr-1 align-middle">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input checkbox-bulk-select" id="serviceGroupBulk" type="checkbox" data-checkbox-body="#serviceGroupTbody" data-checkbox-actions="#serviceGroupBulkActions" data-checkbox-replaced-element="#serviceGroupButtons" [disabled]="serviceGroupData?.length==0">
+                                  <label class="custom-control-label" for="serviceGroupBulk"></label>
+                                </div>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'name'; sortReverse = !sortReverse">
+                                Service Name
+                                <span *ngIf="sortType == 'name' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'name' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'name'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'desc'; sortReverse = !sortReverse">
+                                Description
+                                <span *ngIf="sortType == 'desc' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'desc' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'desc'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'status'; sortReverse = !sortReverse">
+                                Status
+                                <span *ngIf="sortType == 'status' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'status' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'status'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle">
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="serviceGroupTbody">
+                            <tr class="btn-reveal-trigger" *ngFor="let sg of serviceGroupData |filter: searchServiceGroup | orderBy:sortType:sortReverse | paginate: serviceGroupConfig">
+                              <td class="align-middle">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="sg{{sg.id}}" />
+                                  <label class="custom-control-label" for="sg{{sg.id}}"></label>
+                                </div>
+                              </td>
+                              <th class="align-middle">
+                                <a href="javascript:void(0)" (click)="editServiceGroup(sg.id)">
+                                  {{sg.name}}
+                                </a>
+                              </th>
+                              <td class="align-middle">
+                                <span *ngIf="sg.desc.length<40;else tooltip_content">{{sg.desc}}</span>
+                                <ng-template #tooltip_content>
+                                  <span data-toggle="tooltip" data-placement="top" title="{{sg.desc}}">
+                                    {{sg.desc| slice:0:40}} ...
+                                  </span>
+                                </ng-template>
+                              </td>
+                              <td class="align-middle">
+                                <div class="custom-control custom-switch">
+                                  <input class="custom-control-input" type="checkbox" id="switch{{sg.id}}" [(ngModel)]="sg.status" (change)="changeStatus('serviceGroup', sg.id, sg.status,'changeStatus')" />
+                                  <label class="custom-control-label cursor-pointer" for="switch{{sg.id}}"></label>
+                                </div>
+                              </td>
+                              <td class="align-middle white-space-nowrap">
+                                <div class="dropdown text-sans-serif">
+                                  <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
+                                          type="button" id="dropdown0"
+                                          data-toggle="dropdown"
+                                          data-boundary="html"
+                                          aria-haspopup="true"
+                                          aria-expanded="false">
+                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-right border py-0"
+                                       aria-labelledby="dropdown0">
+                                    <div class="bg-white py-2">
+                                      <a class="dropdown-item cursor-pointer" href="javascript:void(0)" (click)="editServiceGroup(sg.id)">View / Edit</a>
+                                      <div class="dropdown-divider"></div>
+                                      <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(sg.id,'serviceGroup','deleteItem',[])">Delete</a>
+                                      <!--(click)="changeStatus('serviceGroup', sg.id, -1,'deleteItem')"-->
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <table *ngIf="serviceGroupData?.length==0" class="w-100 text-center">
+                          <tr>
+                            <td colspan="14" class="p-2">
+                              <p class="text-center bold-text font-size18px m-0">No data available</p>
+                              <p class="text-center m-0 text-gray font-size13px">There is not data to show you right now</p>
+                            </td>
+                          </tr>
+                        </table>
+                        <pagination-template #p="paginationApi" [id]="serviceGroupConfig.id" maxSize="5" (pageChange)="serviceGroupConfig.currentPage = $event" (pageBoundsCorrection)="serviceGroupConfig.currentPage = $event">
+                          <div class="row mx-1 align-items-center justify-content-center justify-content-md-between" *ngIf="p.pages?.length > 0">
+                            <div class="col-auto mb-2 mb-sm-0">
+                              <div class="dataTables_info">Showing {{((p.getCurrent()-1)*serviceGroupConfig.itemsPerPage)+1}} to {{(p.getCurrent()*serviceGroupConfig.itemsPerPage) < p.getTotalItems() ? (p.getCurrent()*serviceGroupConfig.itemsPerPage) : p.getTotalItems()}} of {{p.getTotalItems()}} entries</div>
+                            </div>
+                            <div class="col-auto">
+                              <div class="paging_simple_numbers pt-3">
+                                <ul class="pagination pagination-sm">
+                                  <li class="paginate_button page-item previous" [class.disabled]="p.isFirstPage()">
+                                    <a class="page-link" (click)="p.previous()"> < </a>
+                                  </li>
+                                  <li class="paginate_button page-item" *ngFor="let page of p.pages" [class.active]="p.getCurrent() === page.value">
+                                    <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</a>
+                                    <a class="page-link" *ngIf="p.getCurrent() === page.value">{{ page.label }}</a>
+                                  </li>
+                                  <li class="paginate_button page-item next" [class.disabled]="p.isLastPage()">
+                                    <a class="page-link" (click)="p.next()"> > </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </pagination-template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ngx-loading [show]="loading"></ngx-loading>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="serviceGroupModal" tabindex="-1" role="dialog" aria-labelledby="serviceGroupModal" data-backdrop="static" data-keyboard="true"
+     aria-hidden="true">
+  <div class="modal-dialog activity-select-modal-width " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Service Group Details</h5>
+        <button class="close" type="button" aria-label="Close" data-dismiss="modal">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="serviceGroupModal" id="serviceGroupModalBody">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group" [ngClass]="{'invalid':!serviceGroupObj.name}">
+              <label for="name">Service Name</label>
+              <input class="form-control" id="name" type="text" [(ngModel)]="serviceGroupObj.name" required="required" appTrimLeft autocomplete="off"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="desc">Description</label>
+              <textarea class="form-control" id="desc" [(ngModel)]="serviceGroupObj.desc"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary" id="btnServiceGroup" type="button" [disabled]="!serviceGroupObj.name" (click)="saveServiceGroup()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Delete-->
+<div class="modal fade z-index10000" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true" data-keyboard="true">
+  <div class="modal-dialog modal-dialog-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Delete</h5>
+        <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close"><span class="font-weight-light" aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure want to delete {{delCount}} item(s)?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary btn-sm" type="button" (click)="deleteItem(delId,delType,delType2,delBulkArray)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

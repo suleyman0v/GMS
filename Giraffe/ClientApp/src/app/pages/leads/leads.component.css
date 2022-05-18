@@ -1,0 +1,451 @@
+/*@import url("~assets/lib/raty-js/jquery.raty.css");*/
+
+.tox-tinymce {
+  height: 25vh !important;
+}
+
+.fc-daygrid-body {
+  min-width: 300px;
+}
+
+.dz-margin {
+  margin: 0 !important;
+}
+
+.svg-inline--fa {
+  vertical-align: -0.05rem;
+}
+
+.input-group-text-symbol {
+  padding: 0.3125rem 0.5rem !important;
+}
+
+#tab-Worksheet label {
+  font-size: 0.7333rem !important;
+}
+
+.co-parent {
+  display: flex;
+  justify-content: space-around;
+}
+
+.text-green {
+  color: green;
+}
+
+.border-green {
+  border: 2px solid green;
+}
+
+.border-danger_ {
+  border: 2px solid red;
+  margin-bottom: 50px;
+  margin-left: 50px;
+}
+
+.stamp {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  opacity: 0.7;
+  position: absolute;
+  font-size: 21px;
+  right: 1%;
+  top: 100%;
+  border-radius: 5%;
+  height: 55px;
+  font-weight: bold
+}
+
+.stamp-date {
+  font-size: 12px;
+  bottom: 4px;
+  font-weight: 400
+}
+
+.co {
+  padding-left: 3px;
+  text-align: right;
+  display: block;
+}
+
+.fw-600 {
+  font-weight: 600 !important
+}
+
+.mt30 {
+  margin-top: 30px;
+}
+
+.mt40 {
+  margin-top: 40px;
+}
+
+.bg-item-change {
+  transition: all .3s ease-in-out;
+}
+
+  .bg-item-change:hover label {
+    color: white
+  }
+
+  .bg-item-change:hover label {
+    color: white
+  }
+
+  .bg-item-change:hover {
+    background: #32416f;
+  }
+
+.icon-item-check {
+  transition: all .1s ease-in-out;
+  visibility: hidden;
+  color: white
+}
+
+.icon-item-move {
+  transition: all .1s ease-in-out;
+  visibility: hidden;
+  color: white
+}
+
+.btn-item-delete {
+  transition: all .1s ease-in-out;
+  visibility: hidden;
+}
+
+.bg-item-change:hover .icon-item-check {
+  visibility: visible;
+  cursor: pointer;
+}
+
+.bg-item-change:hover .icon-item-move {
+  visibility: visible;
+  cursor: pointer;
+}
+
+.bg-item-change:hover .btn-item-delete {
+  visibility: visible;
+  cursor: pointer;
+}
+
+
+.default-filter-buttons {
+  position: absolute;
+  right: 15px;
+  top: 8px;
+  list-style: none;
+}
+
+.Worksheet-buttons {
+  position: absolute;
+  right: 15px;
+  top: 8px;
+  list-style: none;
+}
+
+.tox-tinymce {
+  height: 250px;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.text-gray {
+  color: lightgray;
+}
+
+/*scroll design*/
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c6c2c2;
+}
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b7b3b3;
+  }
+
+.fs-13 {
+  font-size: 13px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.stretched-link::after {
+  z-index: -1
+}
+
+.disabledLi {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.filter-area {
+  padding: 16px 20px;
+}
+
+.bl-light {
+  border-left: 1px solid #e7e7e7;
+}
+
+.dropdown-edit {
+  padding: 0.5rem 0 !important;
+  left: -60px !important;
+}
+
+.hr-padding {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.description-style {
+  height: 166px !important
+}
+/*.note-toast {
+  display: none;
+  z-index: 100000;
+  background: white;
+  right: -60px;
+  max-width: 260px;
+  word-wrap: break-word;
+  white-space: normal!important;
+}
+
+.note-hover:hover .note-toast {
+  display: block;
+}
+
+.text-wrap-second {
+  display:block;
+  word-wrap: break-word!important;
+}*/
+.z-index1042 {
+  z-index: 1042;
+}
+
+.z-index200 {
+  z-index: 200;
+}
+
+.z-index5000 {
+  z-index: 10000;
+}
+
+.z-index10000 {
+  z-index: 10000;
+}
+
+.z-index10001 {
+  z-index: 10001;
+}
+
+.event-color-span {
+  padding: 0.5rem !important;
+  border: 1px solid #eee;
+  margin-right: 10px;
+  margin-bottom: 14px;
+}
+
+.event-created {
+  font-size: 10px;
+}
+
+.calendar-body .media-body .assigner-h6 {
+  margin-top: 4px;
+}
+
+.h-340 {
+  height: 340px;
+}
+
+.right7per {
+  right: 10% !important
+}
+
+
+.statistic-percent {
+  border: 1px solid #5e6e82;
+  min-height: 184px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.text-table-default {
+  color: #5e6e82
+}
+
+.font-weight400 {
+  font-weight: 400;
+}
+
+.font-size14 {
+  font-size: 14px;
+}
+
+.text-table-no-data {
+  color: #d3d4d5;
+}
+
+.activity-leadFilter-width {
+  max-width: 30%;
+}
+
+.activity-modal-width {
+  max-width: 65%;
+}
+
+.lead-modal-width {
+  max-width: 80%;
+}
+
+.lead-filter-modal {
+  max-width: 60%;
+}
+
+.lead-customer-modal {
+  max-width: 85%;
+}
+
+.f-xs-13 {
+  font-size: 14px
+}
+
+.activity-crated-f-md-12 {
+  font-size: 14px
+}
+
+.f-sm-12 {
+  font-size: 14px
+}
+
+.res-mr-xs-35 {
+  margin-right: 0px;
+}
+
+::placeholder {
+  font-size: 16px
+}
+
+.icon-position {
+  position: relative;
+  top: 1px;
+}
+
+.closeSignatureImagePosition {
+  right: 183px;
+  bottom: 16px;
+}
+
+.calc-modal-width {
+  max-width: 55%;
+}
+
+.calc-x-button {
+  position: absolute;
+  right: 10px;
+  bottom: 9px;
+}
+
+.modal-email-width {
+  max-width: 50%;
+}
+
+.modal-proposal-print-warning-width {
+  max-width: 25%;
+}
+
+@media (max-width: 1199.98px) {
+  .activity-crated-f-md-12 {
+    font-size: 10px
+  }
+}
+/*responsive area*/
+@media (max-width: 991.98px) {
+  .activity-leadFilter-width {
+    max-width: 95%;
+  }
+
+  .calc-modal-width {
+    max-width: 95%;
+  }
+
+  .modal-email-width {
+    max-width: 95%;
+  }
+
+  .lead-customer-modal {
+    max-width: 95%;
+  }
+
+  .f-sm-12 {
+    font-size: 12px
+  }
+
+  .Worksheet-buttons {
+    top: -39px;
+  }
+
+  .lead-filter-modal {
+    max-width: 95%;
+  }
+
+  .activity-modal-width {
+    max-width: 95%;
+  }
+
+  .lead-modal-width {
+    max-width: 95%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  ::placeholder {
+    font-size: 14px
+  }
+
+  .res-mr-xs-35 {
+    margin-right: 35px;
+  }
+
+  .f-xs-13 {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 759.98px) {
+  .stamp {
+    top: 100%;
+  }
+}
+/**/
+
+.select2-results__option--highlighted[aria-selected] {
+  background-color: #2c7be5 !important;
+  color: #f9fafd !important;
+}
+
+.lead-propsal-card-padding {
+  padding: 1.25rem 1.25rem 1rem 1.25rem !important;
+}
+
+
+.step-button:focus {
+  box-shadow: none;
+}
+

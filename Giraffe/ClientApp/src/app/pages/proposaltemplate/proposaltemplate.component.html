@@ -1,0 +1,536 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Proposal Templates</h5>
+      </div>
+      <div class="card-body bg-light">
+        <div class="row">
+          <div class="col-12">
+            <div class="card shadow-none">
+              <div [style.opacity]="loading ? '0' : '1'">
+                <div class="card-header">
+                  <div class="row align-items-center justify-content-between">
+                    <div class="col-6 col-sm-auto d-flex align-items-center pr-0">
+                      <div id="DataTables_Table_0_filter"
+                           class="dataTables_filter d-sm-inline-block">
+                        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchProposalTemplate">
+                      </div>
+                    </div>
+                    <div class="col-6 col-sm-auto ml-auto text-right pl-0">
+                      <div class="d-none" id="orders-actions">
+                        <div class="input-group input-group-sm">
+                          <select class="custom-select cus"
+                                  aria-label="Bulk actions">
+                            <option selected="">Bulk actions</option>
+                            <option value="Refund">Refund</option>
+                            <option value="Delete">Delete</option>
+                          </select>
+                          <button class="btn btn-falcon-default ml-2"
+                                  type="button">
+                            Apply
+                          </button>
+                        </div>
+                      </div>
+                      <div id="dashboard-actions">
+                        <div class="btn-group d-none" id="proposalTemplateBulkActions">
+                          <button class="btn dropdown-toggle btn-info mx-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-bars pt-1"></span>
+                            <span class="d-none d-sm-inline-block">Action</span>
+                          </button>
+                          <div class="dropdown-menu dropdown-edit">
+                            <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(0,'','',['proposalTemplateBulk','pt','proposalTemplateStatus'])">Delete</a>
+                          </div>
+                        </div>
+                        <div class="btn-group" id="proposalTemplateButtons">
+                          <button class="btn btn-success"
+                                  data-toggle="modal" type="button" (click)="editProposalTemplate(0)">
+                            <span class="fas fa-plus"
+                                  data-fa-transform="shrink-3 down-2"></span>
+                            <span class="d-none d-sm-inline-block">
+                              New Proposal Template
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="falcon-data-table table-responsive">
+                        <table class="table table-sm table-dashboard data-table fs--1 border-bottom">
+                          <thead class="bg-200">
+                            <tr>
+                              <th class="pr-1 align-middle">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input checkbox-bulk-select" id="proposalTemplateBulk" type="checkbox" data-checkbox-body="#proposalTemplateTbody" data-checkbox-actions="#proposalTemplateBulkActions" data-checkbox-replaced-element="#proposalTemplateButtons" [disabled]="proposalTemplateData?.length==0">
+                                  <label class="custom-control-label" for="proposalTemplateBulk"></label>
+                                </div>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'title'; sortReverse = !sortReverse">
+                                Proposal Template Title
+                                <span *ngIf="sortType == 'title' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'title' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'title'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'status'; sortReverse = !sortReverse">
+                                Status
+                                <span *ngIf="sortType == 'status' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'status' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'status'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle">
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="proposalTemplateTbody">
+                            <tr class="btn-reveal-trigger" *ngFor="let pt of proposalTemplateData |filter: searchProposalTemplate | orderBy:sortType:sortReverse | paginate: proposalTemplateConfig">
+                              <td class="align-middle">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="pt{{pt.id}}" />
+                                  <label class="custom-control-label" for="pt{{pt.id}}"></label>
+                                </div>
+                              </td>
+                              <th class="align-middle">
+                                <a href="javascript:void(0)" (click)="editProposalTemplate(pt.id)">
+                                  {{pt.title}}
+                                </a>
+                              </th>
+                              <td class="align-middle">
+                                <div class="custom-control custom-switch">
+                                  <input class="custom-control-input" type="checkbox" id="switch{{pt.id}}" [(ngModel)]="pt.status" (change)="changeStatus('proposalTemplate', pt.id, pt.status,'changeStatus')" />
+                                  <label class="custom-control-label cursor-pointer" for="switch{{pt.id}}"></label>
+                                </div>
+                              </td>
+                              <td class="align-middle white-space-nowrap">
+                                <div class="dropdown text-sans-serif">
+                                  <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
+                                          type="button" id="dropdown0"
+                                          data-toggle="dropdown"
+                                          data-boundary="html"
+                                          aria-haspopup="true"
+                                          aria-expanded="false">
+                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-right border py-0"
+                                       aria-labelledby="dropdown0">
+                                    <div class="bg-white py-2">
+                                      <a class="dropdown-item cursor-pointer" href="javascript:void(0)" (click)="editProposalTemplate(pt.id)">View / Edit</a>
+                                      <div class="dropdown-divider"></div>
+                                      <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(pt.id,'proposalTemplate','deleteItem',[])">Delete</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <table *ngIf="proposalTemplateData?.length==0" class="w-100 text-center">
+                          <tr>
+                            <td colspan="14" class="p-2">
+                              <p class="text-center bold-text font-size18px m-0">No data available</p>
+                              <p class="text-center m-0 text-gray font-size13px">There is not data to show you right now</p>
+                            </td>
+                          </tr>
+                        </table>
+                        <pagination-template #p="paginationApi" [id]="proposalTemplateConfig.id" maxSize="5" (pageChange)="proposalTemplateConfig.currentPage = $event" (pageBoundsCorrection)="proposalTemplateConfig.currentPage = $event">
+                          <div class="row mx-1 align-items-center justify-content-center justify-content-md-between" *ngIf="p.pages?.length > 0">
+                            <div class="col-auto mb-2 mb-sm-0">
+                              <div class="dataTables_info">Showing {{((p.getCurrent()-1)*proposalTemplateConfig.itemsPerPage)+1}} to {{(p.getCurrent()*proposalTemplateConfig.itemsPerPage) < p.getTotalItems() ? (p.getCurrent()*proposalTemplateConfig.itemsPerPage) : p.getTotalItems()}} of {{p.getTotalItems()}} entries</div>
+                            </div>
+                            <div class="col-auto">
+                              <div class="paging_simple_numbers pt-3">
+                                <ul class="pagination pagination-sm">
+                                  <li class="paginate_button page-item previous" [class.disabled]="p.isFirstPage()">
+                                    <a class="page-link" (click)="p.previous()"> < </a>
+                                  </li>
+                                  <li class="paginate_button page-item" *ngFor="let page of p.pages" [class.active]="p.getCurrent() === page.value">
+                                    <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</a>
+                                    <a class="page-link" *ngIf="p.getCurrent() === page.value">{{ page.label }}</a>
+                                  </li>
+                                  <li class="paginate_button page-item next" [class.disabled]="p.isLastPage()">
+                                    <a class="page-link" (click)="p.next()"> > </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </pagination-template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ngx-loading [show]="loading"></ngx-loading>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade px-0" style="padding-left:0px!important;padding-right:0!important" id="proposalTemplateModal" tabindex="-1" role="dialog" aria-labelledby="proposalTemplateModal" data-backdrop="static" data-keyboard="true"
+     aria-hidden="true">
+  <div class="modal-dialog proposal-modal-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Proposal template details</h5>
+        <button class="close" type="button" aria-label="Close" (click)="modalProposalTemplateClose()">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="proposalTemplateModal" id="proposalTemplateModalBody">
+        <div class="row">
+          <div class="col-sm-4 col-8">
+            <div class="form-group" [ngClass]="{'invalid':!proposalTemplateObj.title}">
+              <label for="name">Proposal Template Title</label>
+              <input class="form-control" id="name" type="text" [(ngModel)]="proposalTemplateObj.title" required="required" appTrimLeft autocomplete="off" />
+            </div>
+          </div>
+          <div class="col-4 mt-sm-4-5">
+            <span class="form-check">
+              <input type="checkbox" class="form-check-input cursor-pointer mt-sm-2 mt-2" id="enablePricing" [(ngModel)]="proposalTemplateObj.groupPricing">
+              <label class="form-check-label ft-pricing pt-1" for="enablePricing">Enable group pricing</label>
+            </span>
+          </div>
+          <div class="col-sm-4 col-12">
+            <div class="form-group">
+              <button class="btn btn-primary float-right btn-proposal-add-step mb-sm-0" (click)="addStep()">Add step</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 overflow-auto max-height300px">
+            <div class="accordion rounded mt-2 accordionTemplate" [ngClass]="{'min-h-100px':minHeightOpe==1}" id="accordionExample" [sortablejs]="proposalTemplateObj.steps" [sortablejsOptions]="stepOptions">
+              <div class="mb-2" *ngFor="let pt of proposalTemplateObj.steps;let index=index">
+                <div class="card shadow-none border-bottom border-x border-top" *ngIf="pt.status!=-1">
+                  <div class="card-header py-0" id="heading{{index}}">
+                    <div style="display:none" id="spanStepName{{index}}">
+                      <div class="form-group w-sm-25 w-50 mt-1 d-inline-block position-relative mb-1" style="margin-left: -15px;">
+                        <input type="text" [(ngModel)]="pt.stepName" class="pr-6 form-control" appTrimLeft />
+                        <span class="position-absolute cursor-pointer" style="right:34px;top:6px"
+                              (click)="changeStepName(index)"><i class="fas fa-check text-success"></i></span>
+                        <span class="position-absolute cursor-pointer" style="right:15px;top:6px"
+                              (click)="cancelStepName(index)"><i class="fas fa-times text-danger"></i></span>
+                      </div>
+                    </div>
+                    <a class="btn btn-propoal-template text-decoration-none w-sm-75   w-50 w py-2 px-0 text-left not-focus"
+                       data-toggle="collapse" href="#collapse{{index}}" id="idStepName{{index}}" aria-expanded="false" (click)="collapceIconChange(index)">
+                      <span>
+                        <span class="mr-2 accordion-prop" id="plus{{index}}">+</span>
+                        <span class="mr-2">{{pt.name}}</span>
+                        ({{getStepDetailCount(pt.stepdetails)}})
+                      </span>
+                    </a>
+                    <!--<span class="float-right font-size10  ml-3 cursor-pointer position-absolute delete-propoal-template" (click)="removeStep(index)">
+                      <i class="far fa-trash-alt d-sm-none d-inline-block fa-lg"></i>
+                      <span class="d-sm-inline-block d-none">Delete</span>
+                    </span>
+                    <span class="float-right  font-size10 ml-3 cursor-pointer position-absolute rename-propoal-template" (click)="renameStepName(index)">
+                      <i class="far fa-edit d-sm-none d-inline-block fa-lg"></i>
+                      <span class="d-sm-inline-block d-none">
+                        Rename
+                      </span>
+                    </span>
+                    <span class="float-right font-size10 cursor-pointer position-absolute addline-propoal-template" (click)="addItemService(index,'AddLine')">
+                      <i class="fas fa-plus-circle d-sm-none d-inline-block fa-lg"></i>
+                      <span class="d-sm-inline-block d-none"> Add line item</span>
+                    </span>-->
+
+                    <div class="dropdown text-sans-serif btn-reveal-trigger d-inline-block d-sm-none position-absolute pro-temp-three-btn position-relative z-index10000">
+                      <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal dropdown-caret-none" type="button" id="dropdown-bandwidth-saved" data-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+                      <div class="dropdown-menu dropdown-menu-right border py-0" aria-labelledby="dropdown-bandwidth-saved">
+                        <div class="bg-white py-2">
+                          <a class="dropdown-item" (click)="addFactor(index)">Add Factor</a>
+                          <a class="dropdown-item" (click)="addItemService(index,'AddLine')">Add Line Item</a>
+                          <a class="dropdown-item" (click)="renameStepName(index)">Rename</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item text-danger" (click)="removeStep(index)">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn btn-falcon-default d-none d-sm-block btn-sm position-absolute delete-propoal-template cursor-pointer"
+                            type="button" (click)="removeStep(index)" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                      <span class="far fa-trash-alt" data-fa-transform="shrink-3 down-2"></span>
+                    </button>
+                    <button class="btn btn-falcon-default d-none d-sm-block btn-sm mx-2 position-absolute rename-propoal-template cursor-pointer"
+                            type="button" (click)="renameStepName(index)" data-toggle="tooltip" data-placement="bottom" title="Rename">
+                      <span class="far fa-edit" data-fa-transform="shrink-3 down-2"></span>
+                    </button>
+                    <button class="btn btn-falcon-default d-none d-sm-block btn-sm position-absolute addline-propoal-template cursor-pointer"
+                            type="button" (click)="addItemService(index,'AddLine')" data-toggle="tooltip" data-placement="bottom" title="Add line item">
+                      <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+                    </button>
+                    <button class="btn btn-falcon-default d-none d-sm-block btn-sm position-absolute addline-propoal-factor cursor-pointer"
+                            type="button" (click)="addFactor(index)" data-toggle="tooltip" data-placement="bottom" title="Add factor">
+                      <span class="fas fa-times" data-fa-transform="shrink-3 down-2"></span>
+                    </button>
+                  </div>
+                  <div class="collapse" id="collapse{{index}}" *ngIf="proposalTemplateObj.steps[index].stepdetails?.length>0">
+                    <div class="card-body pt-2 pb-0">
+                      <div class="dashboard-data-table table-responsive">
+                        <table class="table table-sm table-dashboard fs--1 data-table border-bottom">
+                          <tbody [sortablejs]="pt.stepdetails" [sortablejsOptions]="stepDetailOptions">
+                            <tr class="btn-reveal-trigger" *ngFor="let sd of pt.stepdetails;let index2=index">
+                              <td class="align-middle" *ngIf="sd.status!=-1">
+                                {{sd.name}}
+                              </td>
+                              <td class="align-middle text-right" *ngIf="sd.status!=-1">
+                                <div class="form-check">
+                                  <input type="checkbox" class="form-check-input cursor-pointer" id="visibleCheck{{index}}-{{index2}}" [(ngModel)]="sd.visibleope" (click)="unCheckQtyOpe(index,index2,sd.visibleope)">
+                                  <label class="form-check-label font-size10  cursor-pointer" for="visibleCheck{{index}}-{{index2}}">Visible on proposal</label>
+                                </div>
+                              </td>
+                              <td class="align-middle text-right" *ngIf="sd.status!=-1">
+                                <div class="form-check" *ngIf="!sd.priceOnRequestOpe">
+                                  <input type="checkbox" class="form-check-input cursor-pointer" id="qtyCheck{{index}}-{{index2}}" [(ngModel)]="sd.qtyope" [disabled]="sd.visibleope==0">
+                                  <label class="form-check-label font-size10 cursor-pointer" for="qtyCheck{{index}}-{{index2}}">Show Qty.</label>
+                                </div>
+                              </td>
+                              <td class="align-middle text-right cursor-pointer" *ngIf="sd.status!=-1">
+                                <a (click)="removeStepDetail(index,index2)">
+                                  <i class="far fa-trash-alt"></i>
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" (click)="modalProposalTemplateClose()">Close</button>
+        <button class="btn btn-primary" id="btnProposalTemplate" type="button" [disabled]="!proposalTemplateObj.title" (click)="saveProposalTemplate()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Item Service-->
+<div class="modal fade" id="itemServicesModal" tabindex="-1" role="dialog" aria-labelledby="itemServicesModal" data-backdrop="static" data-keyboard="true"
+     aria-hidden="true" (keydown.esc)="modalOperation('proposalTemplateModal','itemServicesModal')">
+  <div class="modal-dialog proposal-modal-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Item & Services Selection</h5>
+        <button class="close" type="button" aria-label="Close" data-dismiss="modal" (click)="modalOperation('proposalTemplateModal','itemServicesModal')">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="itemServicesModal" id="itemServicesModalBody">
+        <div class="row">
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label for="itemServiceTypeId">Type</label>
+              <select class="form-control" id="itemServiceTypeId" name="itemServiceTypeId" [(ngModel)]="itemServiceTypeId" (change)="getItemServiceGroup(itemServiceTypeId)">
+                <option [ngValue]="0">Choose</option>
+                <option [ngValue]="1">Item</option>
+                <option [ngValue]="2">Service</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <div class="form-group">
+              <label for="itemServiceGroupId">Group</label>
+              <select class="form-control" id="itemServiceGroupId" name="itemServiceGroupId" [(ngModel)]="itemServiceGroupId">
+                <option [ngValue]="0">Choose</option>
+                <option [ngValue]="isg.id" *ngFor="let isg of itemServiceGroupList">{{isg.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4 col-12">
+            <button class="btn btn-primary btn-block btn-proposal-get-result" [disabled]="itemServiceTypeId==0 || itemServiceGroupId==0" (click)="getItemService(1)">Get Results</button>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-end">
+          <div class="col-md-4 col-12 d-flex justify-content-end">
+            <div class="my-3 mr-1 w-100">
+              <input type="search" class="form-control" placeholder="search" [(ngModel)]="searchItemService" (input)="onSearchItemService()" appTrimLeft />
+            </div>
+          </div>
+        </div>
+        <div class="card-body pt-0 overflow-y-auto h-350px" (scroll)="onScrollItemService($event)">
+          <div class="row">
+            <div class="col-12 p-0">
+              <div class="dashboard-data-table table-responsive">
+                <table class="table table-sm table-dashboard fs--1 data-table border-bottom">
+                  <thead class="bg-200">
+                    <tr>
+                      <th class="sort pr-1 align-middle w-6per pl-0">
+                        <div class="custom-control custom-checkbox">
+                          <input class="custom-control-input checkbox-bulk-select-target z-index10000" type="checkbox" style="z-index:10000;position:relative"
+                                 id="itemServiceAll" [(ngModel)]="selectAll" (click)="selectAllItemService()" />
+                          <label class="custom-control-label custom-search-control"
+                                 for="itemServiceAll"></label>
+                        </div>
+                      </th>
+                      <th style="width:50%" class="text-center cursor-pointer pr-1 align-middle" (click)="sortType = 'title'; sortReverse = !sortReverse">
+                        Title
+                        <span *ngIf="sortType == 'title' && !sortReverse">
+                          <i class="fas fa-sort-up"></i>
+                        </span>
+                        <span *ngIf="sortType == 'title' && sortReverse">
+                          <i class="fas fa-sort-down"></i>
+                        </span>
+                        <span *ngIf="sortType != 'title'">
+                          <i class="fas fa-sort"></i>
+                        </span>
+                      </th>
+                      <th style="width:35%" class="text-center text-center cursor-pointer pr-1 align-middle" (click)="sortType = 'unit'; sortReverse = !sortReverse">
+                        Unit
+                        <span *ngIf="sortType == 'unit' && !sortReverse">
+                          <i class="fas fa-sort-up"></i>
+                        </span>
+                        <span *ngIf="sortType == 'unit' && sortReverse">
+                          <i class="fas fa-sort-down"></i>
+                        </span>
+                        <span *ngIf="sortType != 'unit'">
+                          <i class="fas fa-sort"></i>
+                        </span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="btn-reveal-trigger cursor-pointer" *ngFor="let is of itemService | orderBy:sortType:sortReverse ;let index=index " (click)="checkboxSelectService(is.id,is.ope)" [ngClass]="{'bg-gray':is.ope==1}">
+                      <td class="align-middle  pl-0">
+                        <div class="custom-control custom-checkbox">
+                          <input class="custom-control-input checkbox-bulk-select-target z-index10000" type="checkbox"
+                                 id="itemServiceCheck{{index}}" [(ngModel)]="is.ope" name="checkbox-group-customer" style="z-index:10000;position:relative;right:5px" />
+                          <label class="custom-control-label custom-search-control"
+                                 for="itemServiceCheck{{index}}"></label>
+                        </div>
+                      </td>
+                      <td class="align-middle text-center">{{is.name}}</td>
+                      <td class="align-middle text-center pr-3">{{is.unit}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<div class="card-body pt-0 overflow-y-auto h-340" (scroll)="onScrollItemService($event)">
+          <div class="row">
+            <div class="col-12">
+              <table class="table">
+                <thead class="bg-gray">
+                  <tr>
+                    <th style="width:5%">
+                      <div class="form-check position-relative" style="top:-20px;">
+                        <input type="checkbox" class="form-check-input" id="itemServiceAll" [(ngModel)]="selectAll" (click)="selectAllItemService()">
+                      </div>
+                    </th>
+                    <th style="width:65%">Title</th>
+                    <th style="width:20%">Unit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let is of itemService;let index=index">
+                    <td>
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="itemServiceCheck{{index}}" [(ngModel)]="is.ope">
+                      </div>
+                    </td>
+                    <td>{{is.name}}</td>
+                    <td>{{is.unit}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>-->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="modalOperation('proposalTemplateModal','itemServicesModal')">Close</button>
+        <button class="btn btn-primary" type="button" [disabled]="checkStepDetail()" (click)="addStepDetail()">
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Delete-->
+<div class="modal fade z-index10000" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true" data-keyboard="true">
+  <div class="modal-dialog modal-dialog-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Delete</h5>
+        <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close"><span class="font-weight-light" aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure want to delete {{delCount}} item(s)?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary btn-sm" type="button" (click)="deleteItem(delId,delType,delType2,delBulkArray)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Factor-->
+<div class="modal fade mt-5 px-0 z-index5000" id="modaFactor" tabindex="-1" role="dialog" aria-labelledby="modaFactor" data-backdrop="static" data-keyboard="true"
+     aria-hidden="true">
+  <div class="modal-dialog" style="min-width: 35%;" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Multiplication Factors</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close" (click)="closeFactor()">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <p>The total sum of the pipes for the existing step will be multipled by the factor than will be applied.</p>
+              <div class="row" *ngFor="let factor of factorObj;let index = index;let first = first;let last = last">
+
+                <div class="col-4">
+                  <label for="length">Label</label>
+                  <input type="text" class="form-control" id="factorLabel{{index}}" title="Factor label" (keyup)="changeLabel()" [(ngModel)]="factor.label" />
+                </div>
+
+                <div class="col-4">
+                  <label for="height">Factor value</label>
+                  <input type="number" class="form-control" id="factorValue{{index}}" min="1" title="Factor value" (keyup)="factorValueChange(factor.value,index)" [(ngModel)]="factor.value" />
+                </div>
+
+                <div class="col-2" style="padding-top:31px;">
+                  <button class="btn btn-danger" (click)="removeFactorDetail(index)" [disabled]="factorObj.length==1"><i class="fas fa-trash-alt"></i></button>
+                </div>
+                <div class="col-2" style="padding-top:31px;" *ngIf="last">
+                  <button class="btn btn-primary" type="button" [disabled]="factor.label=='' || factor.value<1" (click)="addFactorDetail()"><i class="fas fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="closeFactor()">Close</button>
+        <button class="btn btn-primary" type="button" [disabled]="!factorObj || disableFactorButton" (click)="saveFactor()">Add</button>
+      </div>
+    </div>
+  </div>
+</div>

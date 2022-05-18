@@ -1,0 +1,15 @@
+::placeholder {
+  font-size: 16px
+}
+
+@media (max-width: 575.98px) {
+  ::placeholder {
+    font-size: 14px
+  }
+}
+.rounded-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: auto
+}

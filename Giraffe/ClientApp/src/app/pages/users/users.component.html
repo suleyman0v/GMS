@@ -1,0 +1,366 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Users</h5>
+      </div>
+      <div class="card-body bg-light">
+        <div class="row">
+          <div class="col-12">
+            <div class="card shadow-none">
+              <div [style.opacity]="loading ? '0' : '1'">
+                <div class="card-header">
+                  <div class="row align-items-center justify-content-between">
+                    <div class="col-6 col-sm-auto d-flex align-items-center pr-0">
+                      <div id="DataTables_Table_0_filter"
+                           class="dataTables_filter d-sm-inline-block">
+                        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchUser">
+                      </div>
+                    </div>
+                    <div class="col-6 col-sm-auto ml-auto text-right pl-0">
+                      <div class="d-none" id="orders-actions">
+                        <div class="input-group input-group-sm">
+                          <select class="custom-select cus"
+                                  aria-label="Bulk actions">
+                            <option selected="">Bulk actions</option>
+                            <option value="Refund">Refund</option>
+                            <option value="Delete">Delete</option>
+                          </select>
+                          <button class="btn btn-falcon-default ml-2"
+                                  type="button">
+                            Apply
+                          </button>
+                        </div>
+                      </div>
+                      <div id="dashboard-actions">
+                        <div class="btn-group d-none" id="userBulkActions">
+                          <button class="btn dropdown-toggle btn-info mx-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="fas fa-bars pt-1"></span>
+                            <span class="d-none d-sm-inline-block">Action</span>
+                          </button>
+                          <div class="dropdown-menu dropdown-edit">
+                            <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(0,'','',['userBulk','u','userStatus'])">Delete</a>
+                          </div>
+                        </div>
+                        <div class="btn-group" id="userGroupButtons">
+                          <button class="btn btn-success"
+                                  data-toggle="modal" type="button" (click)="editUser(0)">
+                            <span class="fas fa-plus"
+                                  data-fa-transform="shrink-3 down-2"></span>
+                            <span class="d-none d-sm-inline-block">
+                              New User
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="falcon-data-table table-responsive">
+                        <table class="table table-sm table-dashboard data-table fs--1 border-bottom">
+                          <thead class="bg-200">
+                            <tr>
+                              <th class="pr-1 align-middle">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input checkbox-bulk-select" id="userBulk" type="checkbox"
+                                         data-checkbox-body="#userTbody"
+                                         data-checkbox-actions="#userBulkActions"
+                                         data-checkbox-replaced-element="#userGroupButtons"
+                                         [disabled]="userData?.length==0">
+                                  <label class="custom-control-label" for="userBulk"></label>
+                                </div>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'name'; sortReverse = !sortReverse">
+                                Name
+                                <span *ngIf="sortType == 'name' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'name' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'name'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'lastName'; sortReverse = !sortReverse">
+                                Last Name
+                                <span *ngIf="sortType == 'lastName' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'lastName' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'lastName'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'role'; sortReverse = !sortReverse">
+                             Role
+                                <span *ngIf="sortType == 'role' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'role' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'role'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'email'; sortReverse = !sortReverse">
+                                Email
+                                <span *ngIf="sortType == 'email' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'email' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'email'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'creationDate'; sortReverse = !sortReverse">
+                                Creation Date
+                                <span *ngIf="sortType == 'creationDate' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'creationDate' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'creationDate'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle cursor-pointer" (click)="sortType = 'status'; sortReverse = !sortReverse">
+                                Status
+                                <span *ngIf="sortType == 'status' && !sortReverse">
+                                  <i class="fas fa-sort-up"></i>
+                                </span>
+                                <span *ngIf="sortType == 'status' && sortReverse">
+                                  <i class="fas fa-sort-down"></i>
+                                </span>
+                                <span *ngIf="sortType != 'status'">
+                                  <i class="fas fa-sort"></i>
+                                </span>
+                              </th>
+                              <th class="pr-1 align-middle">
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="userTbody">
+                            <tr class="btn-reveal-trigger" *ngFor="let u of userData |filter: searchUser | orderBy:sortType:sortReverse | paginate: userConfig">
+                              <td class="align-middle">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input checkbox-bulk-select-target" type="checkbox" id="u{{u.id}}" />
+                                  <label class="custom-control-label" for="u{{u.id}}"></label>
+                                </div>
+                              </td>
+                              <th class="align-middle">
+                                <a href="javascript:void(0)" (click)="editUser(u.id)">
+                                  {{u.name}}
+                                </a>
+                              </th>
+                              <td class="align-middle">
+                                {{u.lastName}}
+                              </td>
+                              <td class="align-middle">
+                                {{u.role}}
+                              </td>
+                              <td class="align-middle">
+                                {{u.email}}
+                              </td>
+                              <td class="align-middle">
+                                {{u.creationDate}}
+                              </td>
+                              <td class="align-middle">
+                                <div class="custom-control custom-switch">
+                                  <input class="custom-control-input" type="checkbox" id="switch{{u.id}}" [(ngModel)]="u.status" (change)="changeStatus('user', u.id, u.status,'changeStatus')" />
+                                  <label class="custom-control-label cursor-pointer" for="switch{{u.id}}"></label>
+                                </div>
+                              </td>
+                              <td class="align-middle white-space-nowrap">
+                                <div class="dropdown text-sans-serif">
+                                  <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
+                                          type="button" id="dropdown0"
+                                          data-toggle="dropdown"
+                                          data-boundary="html"
+                                          aria-haspopup="true"
+                                          aria-expanded="false">
+                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-right border py-0"
+                                       aria-labelledby="dropdown0">
+                                    <div class="bg-white py-2">
+                                      <a class="dropdown-item cursor-pointer" href="javascript:void(0)" (click)="editUser(u.id)">View / Edit</a>
+                                      <div class="dropdown-divider"></div>
+                                      <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(u.id,'user','deleteUser',[])">Delete</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <table *ngIf="userData?.length==0" class="w-100 text-center">
+                          <tr>
+                            <td colspan="14" class="p-2">
+                              <p class="text-center bold-text font-size18px m-0">No data available</p>
+                              <p class="text-center m-0 text-gray font-size13px">There is not data to show you right now</p>
+                            </td>
+                          </tr>
+                        </table>
+                        <pagination-template #p="paginationApi" [id]="userConfig.id" maxSize="5" (pageChange)="userConfig.currentPage = $event"
+                                             (pageBoundsCorrection)="userConfig.currentPage = $event">
+                          <div class="row mx-1 align-items-center justify-content-center justify-content-md-between" *ngIf="p.pages?.length > 0">
+                            <div class="col-auto mb-2 mb-sm-0">
+                              <div class="dataTables_info">
+                                Showing {{((p.getCurrent()-1)*userConfig.itemsPerPage)+1}}
+                                to {{(p.getCurrent()*userConfig.itemsPerPage) < p.getTotalItems() ? (p.getCurrent()*userConfig.itemsPerPage) : p.getTotalItems()}} of {{p.getTotalItems()}} entries
+                              </div>
+                            </div>
+                            <div class="col-auto">
+                              <div class="paging_simple_numbers pt-3">
+                                <ul class="pagination pagination-sm">
+                                  <li class="paginate_button page-item previous" [class.disabled]="p.isFirstPage()">
+                                    <a class="page-link" (click)="p.previous()"> < </a>
+                                  </li>
+                                  <li class="paginate_button page-item" *ngFor="let page of p.pages" [class.active]="p.getCurrent() === page.value">
+                                    <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</a>
+                                    <a class="page-link" *ngIf="p.getCurrent() === page.value">{{ page.label }}</a>
+                                  </li>
+                                  <li class="paginate_button page-item next" [class.disabled]="p.isLastPage()">
+                                    <a class="page-link" (click)="p.next()"> > </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </pagination-template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ngx-loading [show]="loading"></ngx-loading>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal User-->
+<div class="modal fade px-0" style="padding-left:0!important;padding-right:0!important" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModal" data-backdrop="static" data-keyboard="false"
+     aria-hidden="true" (keydown.esc)="modalUserClose()">
+  <div class="modal-dialog activity-select-modal-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <span *ngIf="modalType!=0 || userLimit!=userData.length">User Details</span>
+          <span *ngIf="modalType==0 &&  userLimit==userData.length">Confirmation</span>
+        </h5>
+        <button class="close" type="button" aria-label="Close" (click)="modalUserClose()">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="userModal" id="userModalBody">
+        <div class="row">
+          <div class="col-12 text-right text-danger bold-text" *ngIf="modalType==0 && userLimit-userData.length<=5 && userLimit!=userData.length">
+            You can add last {{userLimit-userData.length}} user<span *ngIf="userLimit-userData.length!=1">s</span>
+          </div>
+          <div class="col-12 text-right text-danger bold-text" *ngIf="modalType==0 && userLimit==userData.length">Sorry, Your user limit is full</div>
+        </div>
+        <div class="row" *ngIf="modalType!=0 || userLimit!=userData.length">
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':!userObj.name}">
+              <label for="name">First name *</label>
+              <input class="form-control" id="name" type="text" [(ngModel)]="userObj.name" required appTrimLeft autocomplete="off" />
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':!userObj.lastName}">
+              <label for="lastName">Last name *</label>
+              <input class="form-control" id="lastName" type="text" [(ngModel)]="userObj.lastName" required appTrimLeft autocomplete="off" />
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':!userObj.email || (emailUser.invalid && (emailUser.dirty || emailUser.touched))}">
+              <label for="emailUser">Email *</label>
+              <input class="form-control" id="emailUser" type="email" [(ngModel)]="userObj.email"
+                     pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" #emailUser="ngModel" appTrimLeft autocomplete="off" autofocus (keyup)="resetchkOpe()" />
+              <div *ngIf="emailUser.invalid && (emailUser.dirty || emailUser.touched)" class="validation">
+                Please input valid e-mail
+              </div>
+              <!--pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"-->
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':userObj.userType==0}">
+              <label for="userType">Roles *</label>
+              <select class="form-control" id="userType" name="userType" [(ngModel)]="userObj.userType" required>
+                <option [ngValue]="0">Choose</option>
+                <option [ngValue]="ur.id" *ngFor="let ur of userObj.userRoles">{{ur.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 text-right" *ngIf="modalType!=0">
+            <span class="form-check">
+              <input type="checkbox" class="form-check-input cursor-pointer" id="letChangePassword"
+                     [(ngModel)]="changePasswordOpe" (change)="chagenPasswordPermission()">
+              <label class="form-check-label label-completed" for="letChangePassword">Change Password</label>
+            </span>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':!userObj.password}">
+              <label for="password">Password *</label>
+              <input class="form-control" id="password" type="password" [(ngModel)]="userObj.password" required autocomplete="off" [disabled]="modalType!=0 && !changePasswordOpe" />
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':!userObj.confirmationPassword}">
+              <label for="confirtmationPassword">Re-type Password *</label>
+              <input class="form-control" id="confirtmationPassword" type="password" [(ngModel)]="userObj.confirmationPassword" required autocomplete="off" [disabled]="modalType!=0 && !changePasswordOpe" />
+            </div>
+          </div>
+          <div class="col-12">
+            <div *ngIf="userObj.password && userObj.confirmationPassword  && userObj.password!=userObj.confirmationPassword" class="validation text-right">
+              Password and Confirmation Password must be match
+            </div>
+            <div *ngIf="chkOpe==1" class="validation bold-text text-right">
+              This e-mail address is currently in use
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" *ngIf="modalType!=0 || userLimit!=userData.length">
+        <button class="btn btn-secondary" type="button" (click)="modalUserClose()">Close</button>
+        <button class="btn btn-primary" id="btnUser" type="button" [disabled]="!userObj.name || !userObj.lastName  || userObj.userType==0 || !userObj.email || disableButton==1
+                || (changePasswordOpe && (!userObj.password || !userObj.confirmationPassword || userObj.password!=userObj.confirmationPassword))" (click)="checkUserEmail()">
+          <!--&& (emailUser.invalid || (emailUser.dirty && emailUser.touched))-->
+          <!--|| (emailCustomer.invalid && (emailCustomer.dirty || emailCustomer.touched))-->
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Delete-->
+<div class="modal fade z-index10000 a" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true" data-keyboard="true">
+  <div class="modal-dialog modal-dialog-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Delete</h5>
+        <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close"><span class="font-weight-light" aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure want to delete {{delCount}} item(s)?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary btn-sm" type="button" (click)="deleteItem(delId,delType,delType2,delBulkArray)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

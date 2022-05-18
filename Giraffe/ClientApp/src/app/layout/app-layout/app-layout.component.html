@@ -1,0 +1,342 @@
+<main class="main" id="top">
+  <div class="container-fluid" data-layout="container-fluid">
+    <nav class="navbar navbar-vertical navbar-expand-xl navbar-light navbar-inverted">
+      <div class="d-flex align-items-center">
+        <div class="toggle-icon-wrapper">
+          <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-toggle="tooltip" data-placement="left" title=""><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+        </div>
+        <a class="navbar-brand" routerLink="/summary">
+          <div class="d-flex align-items-center py-3">
+            <img class="mr-2 img-logo" src="{{_authService.companyImage()}}" alt="logo" width="100" />
+            <!--<span class="text-sans-serif">{{_authService.companyName()}}</span>-->
+          </div>
+        </a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+        <div class="navbar-vertical-content perfect-scrollbar scrollbar menu-list">
+          <ul class="navbar-nav flex-column">
+            <li class="nav-item" [routerLinkActive]="['link-active']" *ngFor="let item of favoritetMenus">
+              <a class="nav-link" [routerLink]="item.url" (click)="closeNavBar()">
+                <div class="d-flex align-items-center">
+                  <span class="nav-link-icon"><span class="fas fa-star"></span></span><span class="nav-link-text mb-1px">{{item.name}}</span>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <div class="navbar-vertical-divider" *ngIf="favoritetMenus?.length > 0">
+            <hr class="navbar-vertical-hr my-2" />
+          </div>
+          <ul class="navbar-nav flex-column" id="navbar-nav">
+            <li class="nav-item" [routerLinkActive]="['link-active']" *ngFor="let menu of menus">
+              <div *ngIf="menu.submenus.length>0">
+                <a class="nav-link dropdown-indicator" href="#submenu-{{menu.name}}" data-toggle="collapse" role="button">
+                  <div class="d-flex align-items-center">
+                    <span class="nav-link-icon"><span class="{{menu.icon}}"></span></span><span class="nav-link-text mb-1px">{{menu.name}}</span>
+                  </div>
+                </a>
+                <ul class="nav collapse" id="submenu-{{menu.name}}" data-parent="#navbarVerticalCollapse">
+                  <li class="nav-item submenu-link" *ngFor="let sbm of menu.submenus">
+                    <a class="nav-link d-inline-block" [routerLink]="sbm.url" (click)="closeNavBar(0)">
+                      {{sbm.name}}
+                    </a>
+                    <span [ngClass]="{'icon-pin': sbm.favoritetope==0}" class="cursor-pointer" (click)="menuOperation(menu.id, sbm.id,sbm.favoritetope)">
+                    <i class="fas fa-thumbtack" style="float:right;margin-top:6px"></i></span>
+                  </li>
+                </ul>
+              </div>
+              <div *ngIf="menu.submenus.length==0">
+                <a class="nav-link" [routerLink]="menu.url" (click)="closeNavBar(1)">
+                  <div class="d-flex align-items-center">
+                    <span class="nav-link-icon"><span class="{{menu.icon}}"></span></span><span class="nav-link-text mb-1px">{{menu.name}}</span>
+                  </div>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="content">
+      <nav class="navbar navbar-light navbar-glass navbar-top sticky-kit navbar-expand">
+        <button class="btn navbar-toggler-humburger-icon navbar-toggler mr-1 mr-sm-3" type="button" data-toggle="collapse" data-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+        <a class="navbar-brand mr-1 mr-sm-3" routerLink="/summary" >
+          <div class="d-flex align-items-center">
+            <img class="mr-2 img-logo" src="{{_authService.companyImage()}}" alt="logo" width="100"/>
+            <!--<span class="text-sans-serif">{{_authService.companyName()}}</span>-->
+          </div>
+        </a>
+        <ul class="navbar-nav navbar-nav-icons ml-auto flex-row align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)">
+              <span class="fas fa-search fs-4" data-fa-transform="shrink-7"></span>
+            </a>
+          </li>
+          <!--<li class="nav-item dropdown">
+            <a class="nav-link notification-indicator notification-indicator-primary px-0 icon-indicator" id="navbarDropdownNotification" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-bell fs-4" data-fa-transform="shrink-6"></span></a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-card" aria-labelledby="navbarDropdownNotification">
+              <div class="card card-notification shadow-none" style="max-width: 20rem">
+                <div class="card-header">
+                  <div class="row justify-content-between align-items-center">
+                    <div class="col-auto">
+                      <h6 class="card-header-title mb-0">Notifications</h6>
+                    </div>
+                    <div class="col-auto"><a class="card-link font-weight-normal" href="#">Mark all as read</a></div>
+                  </div>
+                </div>
+                <div class="list-group list-group-flush font-weight-normal fs--1">
+                  <div class="list-group-title border-bottom">NEW</div>
+                  <div class="list-group-item">
+                    <a class="notification notification-flush bg-200" href="#!">
+                      <div class="notification-avatar">
+                        <div class="avatar avatar-2xl mr-3">
+                          <img class="rounded-circle" src="../assets/img/team/1-thumb.png" alt="" />
+
+                        </div>
+                      </div>
+                      <div class="notification-body">
+                        <p class="mb-1"><strong>Emma Watson</strong> replied to your comment : "Hello world 😍"</p>
+                        <span class="notification-time"><span class="mr-1" role="img" aria-label="Emoji">💬</span>Just now</span>
+
+                      </div>
+                    </a>
+
+                  </div>
+                  <div class="list-group-item">
+                    <a class="notification notification-flush bg-200" href="#!">
+                      <div class="notification-avatar">
+                        <div class="avatar avatar-2xl mr-3">
+                          <div class="avatar-name rounded-circle"><span>AB</span></div>
+                        </div>
+                      </div>
+                      <div class="notification-body">
+                        <p class="mb-1"><strong>Albert Brooks</strong> reacted to <strong>Mia Khalifa's</strong> status</p>
+                        <span class="notification-time"><span class="mr-1 fab fa-gratipay text-danger"></span>9hr</span>
+
+                      </div>
+                    </a>
+
+                  </div>
+                  <div class="list-group-title">EARLIER</div>
+                  <div class="list-group-item">
+                    <a class="notification notification-flush" href="#!">
+                      <div class="notification-avatar">
+                        <div class="avatar avatar-2xl mr-3">
+                          <img class="rounded-circle" src="../assets/img/icons/weather-sm.jpg" alt="" />
+                        </div>
+                      </div>
+                      <div class="notification-body">
+                        <p class="mb-1">The forecast today shows a low of 20&#8451; in California. See today's weather.</p>
+                        <span class="notification-time"><span class="mr-1" role="img" aria-label="Emoji">🌤️</span>1d</span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="card-footer text-center border-top"><a class="card-link d-block" href="../pages/notifications.html">View all</a></div>
+              </div>
+            </div>
+          </li>-->
+          <li class="nav-item dropdown">
+            <a class="nav-link pr-0" id="navbarDropdownUser" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="avatar avatar-xl">
+                <img class="rounded-circle" src="{{_authService.image()}}"/>
+              </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right py-0" aria-labelledby="navbarDropdownUser">
+              <div class="bg-white rounded-soft py-2">
+                <a class="dropdown-item font-weight-bold text-warning" href="javascript:void(0)">{{_authService.firstName()}} {{_authService.lastName()}}</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" routerLink="/account-settings">Account Settings</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item cursor-pointer" (click)="logOut()">Logout</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <router-outlet></router-outlet>
+      <footer>
+        <div class="row no-gutters justify-content-between fs--1 mt-4 mb-3">
+          <div class="col-12 col-sm-auto text-center">
+            <p class="mb-0 text-600">Giraffe Remodeling Management <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none" /> 2021</p>
+          </div>
+          <div class="col-12 col-sm-auto text-center">
+            <p class="mb-0 text-600">v.0.1.0 Beta</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <div class="modal fade modal-fixed-right modal-theme overflow-hidden" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="settings-modal-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-vertical" role="document">
+        <div class="modal-content border-0 vh-100 scrollbar perfect-scrollbar">
+          <div class="modal-header modal-header-settings">
+            <div class="z-index-1 py-1 flex-grow-1">
+              <h5 class="text-white" id="settings-modal-label"> <span class="fas fa-palette mr-2 fs-0"></span>Settings</h5>
+              <p class="mb-0 fs--1 text-white opacity-75"> Set your own customized style</p>
+            </div>
+            <button class="close z-index-1" type="button" data-dismiss="modal" aria-label="Close"><span class="font-weight-light" aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body px-card">
+            <h5 class="fs-0">Color Scheme</h5>
+            <p class="fs--1">Choose the perfect color mode for your app. </p>
+            <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+              <div class="btn btn-theme-default custom-control custom-radio custom-radio-success active">
+                <label class="cursor-pointer hover-overlay" for="theme-mode-default"><img class="w-100" src="../assets/img/generic/falcon-mode-default.jpg" alt="" /></label>
+                <label class="cursor-pointer mb-0 d-flex justify-content-center pl-3" for="theme-mode-default">
+                  <input class="custom-control-input" id="theme-mode-default" type="radio" name="colorScheme" checked="checked" value="theme-mode-default" data-page-url="../index.html" /><span class="custom-control-label">Light</span>
+                </label>
+              </div>
+              <div class="btn btn-theme-dark custom-control custom-radio custom-radio-success">
+                <label class="cursor-pointer hover-overlay" for="theme-mode-dark"><img class="w-100" src="../assets/img/generic/falcon-mode-dark.jpg" alt="" /></label>
+                <label class="cursor-pointer mb-0 d-flex justify-content-center pl-3" for="theme-mode-dark">
+                  <input class="custom-control-input" id="theme-mode-dark" type="radio" name="colorScheme" value="theme-mode-dark" data-page-url="../documentation/dark-mode.html" /><span class="custom-control-label">Dark</span>
+                </label>
+              </div>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between">
+              <div class="media flex-grow-1">
+                <img class="mr-2" src="../assets/img/icons/left-arrow-from-left.svg" width="20" alt="" />
+                <div class="media-body">
+                  <h5 class="fs-0">RTL Mode</h5>
+                  <p class="fs--1 mb-0">Switch your language direction </p>
+                </div>
+              </div>
+              <div class="custom-control custom-switch">
+                <input class="custom-control-input" id="mode-rtl" type="checkbox" data-home-url="../index.html" data-url="../documentation/RTL.html" />
+                <label class="custom-control-label" for="mode-rtl"> </label>
+              </div>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between">
+              <div class="media flex-grow-1">
+                <img class="mr-2" src="../assets/img/icons/arrows-h.svg" width="20" alt="" />
+                <div class="media-body">
+                  <h5 class="fs-0">Fluid Layout</h5>
+                  <p class="fs--1 mb-0">Toggle container layout system </p>
+                </div>
+              </div>
+              <div class="custom-control custom-switch">
+                <input class="custom-control-input" id="mode-fluid" type="checkbox" data-home-url="../index.html" data-url="../documentation/fluid-layout.html" />
+                <label class="custom-control-label" for="mode-fluid"> </label>
+              </div>
+            </div>
+            <hr />
+            <div class="media">
+              <img class="mr-2" src="../assets/img/icons/paragraph.svg" width="20" alt="" />
+              <div class="media-body">
+                <h5 class="fs-0 d-flex align-items-center">Navigation Position <span class="badge badge-pill badge-soft-success fs--2 ml-2">Updated</span></h5>
+                <p class="fs--1 mb-2">Select a suitable navigation system for your web application </p>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" id="option-navbar-vertical" type="radio" name="navbar" value="vertical" checked="checked" data-page-url="../components/navbar/vertical.html" />
+                  <label class="custom-control-label" for="option-navbar-vertical">Vertical</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input class="custom-control-input" id="option-navbar-top" type="radio" name="navbar" value="top" data-page-url="../components/navbar/top.html" />
+                  <label class="custom-control-label" for="option-navbar-top">Top</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline mr-0">
+                  <input class="custom-control-input" id="option-navbar-combo" type="radio" name="navbar" value="combo" data-page-url="../components/navbar/combo.html" />
+                  <label class="custom-control-label" for="option-navbar-combo">Combo</label>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <h5 class="fs-0 d-flex align-items-center">Vertical Navbar Style</h5>
+            <p class="fs--1">Switch between styles for your vertical navbar </p>
+            <div class="btn-group-toggle btn-block btn-group-navbar-style" data-toggle="buttons">
+              <div class="btn-group btn-block">
+                <div class="btn p-0 text-left custom-control custom-radio custom-radio-success mr-2">
+                  <label class="cursor-pointer w-100" for="navbar-style-transparent"><img class="w-100" src="../assets/img/generic/default.png" alt="" /></label>
+                  <label class="cursor-pointer d-flex mb-0 pl-3 ml-2" for="navbar-style-transparent">
+                    <input class="custom-control-input" id="navbar-style-transparent" type="radio" name="navbarVertical" data-page-url="../index.html" value="transparent" /><span class="custom-control-label"> Transparent</span>
+                  </label>
+                </div>
+                <div class="btn p-0 text-left custom-control custom-radio custom-radio-success mr-2">
+                  <label class="cursor-pointer w-100" for="navbar-style-inverted"><img class="w-100" src="../assets/img/generic/inverted.png" alt="" /></label>
+                  <label class="cursor-pointer d-flex mb-0 pl-3 ml-2" for="navbar-style-inverted">
+                    <input class="custom-control-input" id="navbar-style-inverted" type="radio" name="navbarVertical" checked="checked" data-page-url="../layouts/navbar-vertical-inverted.html" value="inverted" /><span class="custom-control-label"> Inverted</span>
+                  </label>
+                </div>
+              </div>
+              <div class="btn-group btn-block mt-3">
+                <div class="btn p-0 text-left custom-control custom-radio custom-radio-success mr-2">
+                  <label class="cursor-pointer w-100" for="navbar-style-card"><img class="w-100" src="../assets/img/generic/card.png" alt="" /></label>
+                  <label class="cursor-pointer d-flex mb-0 pl-3 ml-2" for="navbar-style-card">
+                    <input class="custom-control-input" id="navbar-style-card" type="radio" name="navbarVertical" data-page-url="../layouts/navbar-vertical-card.html" value="card" /><span class="custom-control-label"> Card</span>
+                  </label>
+                </div>
+                <div class="btn p-0 text-left custom-control custom-radio custom-radio-success mr-2">
+                  <label class="cursor-pointer w-100" for="navbar-style-vibrant"><img class="w-100" src="../assets/img/generic/vibrant.png" alt="" /></label>
+                  <label class="cursor-pointer d-flex mb-0 pl-3 ml-2" for="navbar-style-vibrant">
+                    <input class="custom-control-input" id="navbar-style-vibrant" type="radio" name="navbarVertical" data-page-url="../layouts/navbar-vertical-vibrant.html" value="vibrant" /><span class="custom-control-label"> Vibrant</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div class="text-center mt-5">
+              <img class="mb-4" src="../assets/img/illustrations/settings.png" alt="" width="120" />
+              <h5>Like What You See?</h5>
+              <p class="fs--1">Get Falcon now and create beautiful dashboards with hundreds of widgets.</p><a class="btn btn-primary" href="https://themes.getbootstrap.com/product/falcon-admin-dashboard-webapp-template/">Purchase</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="authentication-modal" tabindex="-1" role="dialog" aria-labelledby="authentication-modal-label" aria-hidden="true">
+      <div class="modal-dialog mt-6" role="document">
+        <div class="modal-content border-0">
+          <div class="modal-header px-5 text-white position-relative modal-shape-header">
+            <div class="position-relative z-index-1">
+              <div>
+                <h4 class="mb-0 text-white" id="authentication-modal-label">Register</h4>
+                <p class="fs--1 mb-0">Please create your free Falcon account</p>
+              </div>
+            </div>
+            <button class="close text-white position-absolute t-0 r-0 mt-1 mr-1" data-dismiss="modal" aria-label="Close"><span class="font-weight-light" aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body py-4 px-5">
+            <form>
+              <div class="form-group">
+                <label for="modal-auth-name">Name</label>
+                <input class="form-control" type="text" id="modal-auth-name" />
+              </div>
+              <div class="form-group">
+                <label for="modal-auth-email">Email address</label>
+                <input class="form-control" type="email" id="modal-auth-email" />
+              </div>
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <label for="modal-auth-password">Password</label>
+                  <input class="form-control" type="password" id="modal-auth-password" />
+                </div>
+                <div class="form-group col-6">
+                  <label for="modal-auth-confirm-password">Confirm Password</label>
+                  <input class="form-control" type="password" id="modal-auth-confirm-password" />
+                </div>
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="modal-auth-register-checkbox" />
+                <label class="custom-control-label" for="modal-auth-register-checkbox">I accept the <a href="#!">terms </a>and <a href="#!">privacy policy</a></label>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary btn-block mt-3" type="submit" name="submit">Register</button>
+              </div>
+            </form>
+            <div class="w-100 position-relative mt-5">
+              <hr class="text-300" />
+              <div class="position-absolute absolute-centered t-0 px-3 bg-white text-sans-serif fs--1 text-500 text-nowrap">or register with</div>
+            </div>
+            <div class="form-group mb-0">
+              <div class="row no-gutters">
+                <div class="col-sm-6 pr-sm-1"><a class="btn btn-outline-google-plus btn-sm btn-block mt-2" href="#"><span class="fab fa-google-plus-g mr-2" data-fa-transform="grow-8"></span> google</a></div>
+                <div class="col-sm-6 pl-sm-1"><a class="btn btn-outline-facebook btn-sm btn-block mt-2" href="#"><span class="fab fa-facebook-square mr-2" data-fa-transform="grow-8"></span> facebook</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+

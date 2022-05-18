@@ -1,0 +1,107 @@
+<main class="main bgclr-white" id="top">
+  <div class="container" data-layout="container">
+    <div class="flex-center min-vh-100">
+      <div class="p-sm-5 p-3"  [hidden]="savedOpe==1">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label>First Name <span class="required-star">*</span></label>
+              <input class="form-control" type="text" name="firstName" [(ngModel)]="webLeadObj.firstName" appTrimLeft autocomplete="off" autofocus tabindex="1" required />
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label>Last Name <span class="required-star">*</span></label>
+              <input class="form-control" id="lastname" type="text" name="lastName" [(ngModel)]="webLeadObj.lastName" appTrimLeft autocomplete="off" tabindex="2" required />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':(emailCustomer.invalid && (emailCustomer.dirty || emailCustomer.touched))}">
+              <label>Email Address <span class="required-star">*</span></label>
+              <input class="form-control" id="emailCustomer" name="emailCustomer" type="email" [(ngModel)]="webLeadObj.email"
+                     pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"
+                     #emailCustomer="ngModel" appTrimLeft autocomplete="off" tabindex="3" required />
+              <div *ngIf="emailCustomer.invalid && (emailCustomer.dirty || emailCustomer.touched)" class="validation">
+                Please input valid e-mail
+              </div>
+              <!--pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"-->
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label>Phone <span class="required-star">*</span></label>
+              <input class="form-control" id="phone" type="tel" name="phone" mask="000 000-0000" [dropSpecialCharacters]="false" [(ngModel)]="webLeadObj.phone" autocomplete="off" tabindex="4" required />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label>City <span class="required-star">*</span></label>
+              <input class="form-control" id="city" name="city" type="text" [(ngModel)]="webLeadObj.city" oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1)" appTrimLeft autocomplete="off" tabindex="5" />
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label>ZIP Code <span class="required-star">*</span></label>
+              <input class="form-control" id="zipCode" name="zipCode" type="text" mask="00000" [(ngModel)]="webLeadObj.zipCode" appTrimLeft autocomplete="off" tabindex="6" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label>Project type <span class="required-star">*</span></label>
+              <select class="form-control" id="projectType" name="project-type" [(ngModel)]="webLeadObj.projectType" tabindex="7">
+                <option [ngValue]="0">Choose Project type</option>
+                <option [ngValue]="pl.id" *ngFor="let pl of webLeadObj.projectList">{{pl.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group">
+              <label>Budget</label>
+              <input class="form-control text-left" id="budget" name="budget" [(ngModel)]="webLeadObj.budget" mask="separator" thousandSeparator="," autocomplete="off" tabindex="8">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label>Additional information</label>
+              <textarea name="note" id="note" cols="30" rows="7" class="form-control description-style" [(ngModel)]="webLeadObj.note" maxLength="1500" appTrimLeft autocomplete="off" tabindex="9"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div id="dropzone" class="dropzone dropzone-multiple p-0" data-dropzone data-options='{"url":"Client/UploadFile/"}'>
+              <div class="fallback">
+                <input type="file" name="file2">
+              </div>
+              <div class="dz-message" data-dz-message> <img class="mr-2" src="../assets/img/icons/cloud-upload.svg" width="25" alt="">Drop your files here</div>
+              <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group text-center">
+              <button class="mt-5 btn btn-lg btn-outline-primary rounded-capsule" [disabled]="!webLeadObj.firstName || !webLeadObj.lastName || !webLeadObj.phone || !webLeadObj.city || !webLeadObj.zipCode || !webLeadObj.projectType || disableButton==1 || !webLeadObj.email || (emailCustomer.invalid && (emailCustomer.dirty || emailCustomer.touched))" (click)="saveWebLead()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center" [hidden]="savedOpe==0">
+        <img class="d-block mx-auto pt-10" src="assets/img/icons/success.png" alt="shield" width="70">
+        <h4>Sent Successfully!</h4>
+        <p>Thanks for choosing us. <br>You are now successfully send lead.</p>
+      </div>
+
+    </div>
+  </div>
+</main>

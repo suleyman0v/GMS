@@ -1,0 +1,62 @@
+
+.img-proposal-logo {
+  height: 70px;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.font-size30px {
+  font-size: 30px;
+}
+
+.stamp {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  opacity: 0.7;
+  position: absolute;
+  font-size: 21px;
+  right: 1%;
+  top: 95%;
+  border-radius: 5%;
+  height: 55px;
+  font-weight: bold
+}
+
+.text-green_{
+    color:green;
+}
+
+.border-green_ {
+  border: 2px solid green;
+  margin-bottom: 50px;
+  margin-left: 50px;
+}
+
+.stamp-date {
+  font-size: 12px;
+  bottom: 4px;
+  font-weight: 400
+}
+
+.border-danger_ {
+  border: 2px solid red;
+  margin-bottom: 50px;
+  margin-left: 50px;
+}
+
+.statistic-percent {
+  border: 1px solid #5e6e82;
+  min-height: 184px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+@media (max-width: 759.98px) {
+  .stamp {
+    top: 140%;
+  }
+}

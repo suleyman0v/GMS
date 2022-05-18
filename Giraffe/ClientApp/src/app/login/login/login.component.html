@@ -1,0 +1,50 @@
+<main class="main" id="top">
+  <div class="container" data-layout="container">
+    <div class="row flex-center min-vh-100 py-6">
+      <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+        <img class="bg-auth-circle-shape" src="../../assets/img/illustrations/bg-shape.png" alt="" width="250">
+        <img class="bg-auth-circle-shape-2" src="../../assets/img/illustrations/shape-1.png" alt="" width="150">
+        <div class="card">
+          <div class="card-body p-4 p-sm-5">
+            <div class="row text-left justify-content-between align-items-center mb-2">
+              <div class="col-auto">
+                <h5>Log in</h5>
+              </div>
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <input class="form-control" type="email" placeholder="Email" formControlName="email" tabindex="1" autofocus
+                       [ngClass]="{ 'is-invalid': submitted && loginFormControl.email.errors }" />
+                <div *ngIf="submitted && loginFormControl.email.errors" class="invalid-feedback">
+                  <div *ngIf="loginFormControl.email.errors.required">Email is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="password" placeholder="Password" formControlName="password" tabindex="2" autofocus
+                       [ngClass]="{ 'is-invalid': submitted && loginFormControl.password.errors }" />
+                <div *ngIf="submitted && loginFormControl.password.errors" class="invalid-feedback">
+                  <div *ngIf="loginFormControl.password.errors.required">Password is required</div>
+                </div>
+              </div>
+              <div class="row justify-content-between align-items-center">
+                <div class="col-auto">
+                  <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" id="basic-checkbox" checked="checked" />
+                    <label class="custom-control-label" for="basic-checkbox">Remember me</label>
+                  </div>
+                </div>
+                <div class="col-auto"><a class="fs--1" [routerLink]="'/forgot-password'">Forgot Password?</a></div>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary btn-block mt-3">Log in</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div *ngIf="loginForm.errors?.invalidLogin" class="alert alert-danger mt-3 mb-0">
+          {{errorMessage}}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

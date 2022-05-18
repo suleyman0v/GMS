@@ -1,0 +1,13 @@
+.icon-pin {
+  visibility: hidden;
+}
+.icon-setpin {
+  visibility: visible;
+}
+
+.submenu-link:hover .icon-pin {
+  visibility: visible;
+}
+.img-logo {
+  height: 41px;
+}

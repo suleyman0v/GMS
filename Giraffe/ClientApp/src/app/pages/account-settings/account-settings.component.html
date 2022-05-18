@@ -1,0 +1,115 @@
+<div class="row">
+  <div class="col-md-8 col-12 mt-md-0 mt-2">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Account Settings</h5>
+      </div>
+      <div class="card-body bg-light">
+        <!--left form-->
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit(1)">
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group star-invalid" [ngClass]="{'invalid':!userForm.value.firstName}">
+                <label for="name">First name</label>
+                <input type="text" id="firstName" title="name" class="form-control" formControlName="firstName" tabindex="1" autocomplete="off" autofocus required />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group star-invalid" [ngClass]="{'invalid':!userForm.value.lastName}">
+                <label for="surname">Last name</label>
+                <input type="text" id="lastName" title="Last name" class="form-control" formControlName="lastName" tabindex="2" autocomplete="off" autofocus required />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group star-invalid" [ngClass]="{'invalid':!userForm.value.email || userForm.get('email').invalid}">
+                <label for="email">Email</label>
+                <input type="email" id="email" title="Email" class="form-control"
+                       formControlName="email" tabindex="3" autocomplete="off" autofocus required />
+                <div class="validation" *ngIf="userForm.get('email').invalid">Please input valid e-mail</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="name">Phone</label>
+                <input type="text" id="phone" title="Phone" class="form-control" formControlName="phone" tabindex="4" autocomplete="off" mask="(000) 000 00 00" [dropSpecialCharacters]="false" />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" (change)="fileChangeEvent($event)" class="form-control" id="image" tabindex="5" accept="image/*" />
+                <div class="validation">{{errorImage}}</div>
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary btn-sm float-right"
+                      [disabled]="!userForm.valid">
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-12 mt-md-0 mt-2">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Change Password</h5>
+      </div>
+      <div class="card-body bg-light">
+        <!--right form-->
+        <form [formGroup]="userPasswordForm" (ngSubmit)="onSubmit(2)">
+          <div class="form-group star-invalid" [ngClass]="{'invalid':!userPasswordForm.value.oldPassword}">
+            <label for="old-password">Old Password</label>
+            <input class="form-control" id="oldPassword" type="password" formControlName="oldPassword" tabindex="6" autocomplete="off" autofocus required>
+          </div>
+          <div class="form-group star-invalid" [ngClass]="{'invalid':!userPasswordForm.value.newPassword}">
+            <label for="currentPassword">New Password</label>
+            <input type="password" id="newPassword" title="New Password" class="form-control" formControlName="newPassword" tabindex="7" autocomplete="off" autofocus required />
+          </div>
+          <div class="form-group star-invalid" [ngClass]="{'invalid':!userPasswordForm.value.confirmPassword}">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" title="Confirm Password" class="form-control" formControlName="confirmPassword" tabindex="8" autocomplete="off" autofocus required />
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button class="btn btn-primary float-right btn-sm"
+                      [disabled]="!userPasswordForm.valid">
+                Update Password
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Image-->
+<div class="modal fade mt-5" id="modal_file" tabindex="-1" role="dialog" aria-labelledby="modal_customer" data-backdrop="static" data-keyboard="false"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 40%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Image</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <image-cropper [imageChangedEvent]="imageChangedEvent"
+                       [maintainAspectRatio]="true"
+                       [aspectRatio]="8 / 8"
+                       format="png"
+                       [resizeToWidth]="80"
+                       [resizeToHeight]="80"
+                       (imageCropped)="imageCropped($event)"></image-cropper>
+        <img [src]="croppedImage" class="w-100px h-100px" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary btn-sm" type="button" (click)="SelectImage()">Select</button>
+      </div>
+    </div>
+  </div>
+</div>

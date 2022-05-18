@@ -1,0 +1,705 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Lead settings</h5>
+      </div>
+      <div class="card-body bg-light">
+        <div class="row">
+          <div class="col-12">
+            <ul class="nav nav-pills" id="pill-myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active"
+                   data-toggle="tab" href="#pill-tab-1" role="tab"
+                   aria-controls="pill-tab-1" aria-selected="true" (click)="getLeadSettingsData('projectType')">
+                  Project Types
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" (click)="getLeadSettingsData('source')"
+                   data-toggle="tab" href="#pill-tab-2"
+                   role="tab" aria-controls="pill-tab-2"
+                   aria-selected="true">
+                  Sources
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"
+                   data-toggle="tab" href="#pill-tab-3" role="tab" (click)="getLeadSettingsData('activity')"
+                   aria-controls="pill-tab-3" aria-selected="false">
+                  Activities
+                </a>
+              </li>
+            </ul>
+            <div class="tab-content border mt-3" id="pill-myTabContent">
+              <div class="tab-pane fade show active" id="pill-tab-1"
+                   role="tabpanel" aria-labelledby="list-view-tab">
+                <div class="card shadow-none">
+                  <div [style.opacity]="loading ? '0' : '1'">
+                    <div class="card-header">
+                      <div class="row align-items-center justify-content-between">
+                        <div class="col-6 col-sm-auto d-flex align-items-center pr-0">
+                          <div id="DataTables_Table_0_filter"
+                               class="dataTables_filter d-sm-inline-block">
+                            <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchLeadSettings">
+                          </div>
+                        </div>
+                        <div class="col-6 col-sm-auto ml-auto text-right pl-0">
+                          <div class="d-none" id="orders-actions">
+                            <div class="input-group input-group-sm">
+                              <select class="custom-select cus"
+                                      aria-label="Bulk actions">
+                                <option selected="">Bulk actions</option>
+                                <option value="Refund">Refund</option>
+                                <option value="Delete">Delete</option>
+                              </select>
+                              <button class="btn btn-falcon-default ml-2"
+                                      type="button">
+                                Apply
+                              </button>
+                            </div>
+                          </div>
+                          <div id="dashboard-actions">
+                            <div class="btn-group">
+                              <button class="btn btn-success rounded" type="button" (click)="editProjectType(0)">
+                                <span class="fas fa-plus"
+                                      data-fa-transform="shrink-3 down-2"></span>
+                                <span class="d-none d-sm-inline-block">
+                                  New Project Type
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body pt-0">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="falcon-data-table table-responsive">
+                            <table class="table table-sm table-dashboard data-table fs--1 border-bottom">
+                              <thead class="bg-200">
+                                <tr>
+                                  <th class="pr-1 align-middle cursor-pointer text-center" (click)="sortType = 'name'; sortReverse = !sortReverse">
+                                    Name
+                                    <span *ngIf="sortType == 'name' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'name' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'name'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="pr-1 align-middle cursor-pointer text-center" (click)="sortType = 'status'; sortReverse = !sortReverse">
+                                    Status
+                                    <span *ngIf="sortType == 'status' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'status' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'status'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="pr-1 align-middle">
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="btn-reveal-trigger" *ngFor="let ld of leadSettingsData|filter: searchLeadSettings | orderBy:sortType:sortReverse | paginate: projectTypeConfig">
+                                  <th class="align-middle text-center">
+                                    <a href="javascript:void(0)" (click)="editProjectType(ld.id)">
+                                      {{ld.name}}
+                                    </a>
+                                  </th>
+                                  <td class="align-middle text-center">
+                                    <div class="custom-control custom-switch">
+                                      <input class="custom-control-input" type="checkbox" id="projectTypeSwitch{{ld.id}}" [(ngModel)]="ld.status" (change)="changeStatus('projectType', ld.id, ld.status,'changeStatus')" />
+                                      <label class="custom-control-label cursor-pointer" for="projectTypeSwitch{{ld.id}}"></label>
+                                    </div>
+                                  </td>
+                                  <td class="align-middle white-space-nowrap">
+                                    <div class="dropdown text-sans-serif">
+                                      <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
+                                              type="button" id="dropdown0"
+                                              data-toggle="dropdown"
+                                              data-boundary="html"
+                                              aria-haspopup="true"
+                                              aria-expanded="false">
+                                        <span class="fas fa-ellipsis-h fs--1"></span>
+                                      </button>
+                                      <div class="dropdown-menu dropdown-menu-right border py-0"
+                                           aria-labelledby="dropdown0">
+                                        <div class="bg-white py-2">
+                                          <a class="dropdown-item cursor-pointer" (click)="editProjectType(ld.id)">Edit</a>
+                                          <div class="dropdown-divider"></div>
+                                          <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(ld.id,'projectType','delete',[])">Delete</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <table *ngIf="leadSettingsData?.length==0" class="w-100 text-center">
+                              <tr>
+                                <td colspan="14" class="p-2">
+                                  <p class="text-center bold-text font-size18px m-0">No data available</p>
+                                  <p class="text-center m-0 text-gray font-size13px">There is not data to show you right now</p>
+                                </td>
+                              </tr>
+                            </table>
+                            <pagination-template #p="paginationApi" [id]="projectTypeConfig.id" maxSize="5" (pageChange)="projectTypeConfig.currentPage = $event" (pageBoundsCorrection)="projectTypeConfig.currentPage = $event">
+                              <div *ngIf="p.pages?.length > 0" class="row mx-1 align-items-center justify-content-center justify-content-md-between">
+                                <div class="col-auto mb-2 mb-sm-0">
+                                  <div class="dataTables_info">Showing {{((p.getCurrent()-1)*projectTypeConfig.itemsPerPage)+1}} to {{(p.getCurrent()*projectTypeConfig.itemsPerPage) < p.getTotalItems() ? (p.getCurrent()*projectTypeConfig.itemsPerPage) : p.getTotalItems()}} of {{p.getTotalItems()}} entries</div>
+                                </div>
+                                <div class="col-auto">
+                                  <div class="paging_simple_numbers pt-3">
+                                    <ul class="pagination pagination-sm">
+                                      <li class="paginate_button page-item previous" [class.disabled]="p.isFirstPage()">
+                                        <a class="page-link" (click)="p.previous()"> < </a>
+                                      </li>
+                                      <li class="paginate_button page-item" *ngFor="let page of p.pages" [class.active]="p.getCurrent() === page.value">
+                                        <a class="page-link" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</a>
+                                        <a class="page-link" *ngIf="p.getCurrent() === page.value">{{ page.label }}</a>
+                                      </li>
+                                      <li class="paginate_button page-item next" [class.disabled]="p.isLastPage()">
+                                        <a class="page-link" (click)="p.next()"> > </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </pagination-template>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ngx-loading [show]="loading"></ngx-loading>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="pill-tab-2" role="tabpanel"
+                   aria-labelledby="need-care-tab">
+                <div class="card shadow-none">
+                  <div [style.opacity]="loading ? '0' : '1'">
+                    <div class="card-header">
+                      <div class="row align-items-center justify-content-between">
+                        <div class="col-6 col-sm-auto d-flex align-items-center pr-0">
+                          <div id="DataTables_Table_0_filter"
+                               class="dataTables_filter d-sm-inline-block">
+                            <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchLeadSettings">
+                          </div>
+                        </div>
+                        <div class="col-6 col-sm-auto ml-auto text-right pl-0">
+                          <div class="d-none" id="orders-actions">
+                            <div class="input-group input-group-sm">
+                              <select class="custom-select cus"
+                                      aria-label="Bulk actions">
+                                <option selected="">Bulk actions</option>
+                                <option value="Refund">Refund</option>
+                                <option value="Delete">Delete</option>
+                              </select>
+                              <button class="btn btn-falcon-default ml-2"
+                                      type="button">
+                                Apply
+                              </button>
+                            </div>
+                          </div>
+                          <div id="dashboard-actions">
+                            <div class="btn-group">
+                              <button class="btn btn-success rounded" type="button" (click)="editSource(0)">
+                                <span class="fas fa-plus"
+                                      data-fa-transform="shrink-3 down-2"></span>
+                                <span class="d-none d-sm-inline-block">
+                                  New Source
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body pt-0">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="falcon-data-table table-responsive">
+                            <table class="table table-sm table-dashboard data-table fs--1 border-bottom">
+                              <thead class="bg-200">
+                                <tr>
+                                  <th class="pr-1 align-middle cursor-pointer text-center" (click)="sortType = 'name'; sortReverse = !sortReverse">
+                                    Name
+                                    <span *ngIf="sortType == 'name' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'name' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'name'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="pr-1 align-middle cursor-pointer text-center" (click)="sortType = 'status'; sortReverse = !sortReverse">
+                                    Status
+                                    <span *ngIf="sortType == 'status' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'status' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'status'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="pr-1 align-middle">
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="btn-reveal-trigger" *ngFor="let ld of leadSettingsData |filter: searchLeadSettings | orderBy:sortType:sortReverse | paginate: sourceConfig">
+                                  <th class="align-middle text-center">
+                                    <a href="javascript:void(0)" (click)="editSource(ld.id)">
+                                      {{ld.name}}
+                                    </a>
+                                  </th>
+                                  <td class="align-middle text-center">
+                                    <div class="custom-control custom-switch">
+                                      <input class="custom-control-input" type="checkbox" id="sourceSwitch{{ld.id}}" [(ngModel)]="ld.status" (change)="changeStatus('source', ld.id, ld.status,'changeStatus')" />
+                                      <label class="custom-control-label cursor-pointer" for="sourceSwitch{{ld.id}}"></label>
+                                    </div>
+                                  </td>
+                                  <td class="align-middle white-space-nowrap">
+                                    <div class="dropdown text-sans-serif">
+                                      <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
+                                              type="button" id="dropdown0"
+                                              data-toggle="dropdown"
+                                              data-boundary="html"
+                                              aria-haspopup="true"
+                                              aria-expanded="false">
+                                        <span class="fas fa-ellipsis-h fs--1"></span>
+                                      </button>
+                                      <div class="dropdown-menu dropdown-menu-right border py-0"
+                                           aria-labelledby="dropdown0">
+                                        <div class="bg-white py-2">
+                                          <a class="dropdown-item cursor-pointer" (click)="editSource(ld.id)">Edit</a>
+                                          <div class="dropdown-divider"></div>
+                                          <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(ld.id,'source','delete',[])">Delete</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-template #p2="paginationApi" [id]="sourceConfig.id" maxSize="5" (pageChange)="sourceConfig.currentPage = $event" (pageBoundsCorrection)="sourceConfig.currentPage = $event">
+                              <div *ngIf="p2.pages?.length > 0" class="row mx-1 align-items-center justify-content-center justify-content-md-between">
+                                <div class="col-auto mb-2 mb-sm-0">
+                                  <div class="dataTables_info">Showing {{((p2.getCurrent()-1)*sourceConfig.itemsPerPage)+1}} to {{(p2.getCurrent()*sourceConfig.itemsPerPage) < p2.getTotalItems() ? (p2.getCurrent()*sourceConfig.itemsPerPage) : p2.getTotalItems()}} of {{p2.getTotalItems()}} entries</div>
+                                </div>
+                                <div class="col-auto">
+                                  <div class="paging_simple_numbers pt-3">
+                                    <ul class="pagination pagination-sm">
+                                      <li class="paginate_button page-item previous" [class.disabled]="p2.isFirstPage()">
+                                        <a class="page-link" (click)="p2.previous()"> < </a>
+                                      </li>
+                                      <li class="paginate_button page-item" *ngFor="let page of p2.pages" [class.active]="p2.getCurrent() === page.value">
+                                        <a class="page-link" (click)="p2.setCurrent(page.value)" *ngIf="p2.getCurrent() !== page.value">{{ page.label }}</a>
+                                        <a class="page-link" *ngIf="p2.getCurrent() === page.value">{{ page.label }}</a>
+                                      </li>
+                                      <li class="paginate_button page-item next" [class.disabled]="p2.isLastPage()">
+                                        <a class="page-link" (click)="p2.next()"> > </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </pagination-template>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ngx-loading [show]="loading"></ngx-loading>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="pill-tab-3" role="tabpanel"
+                   aria-labelledby="view-tab">
+                <div class="card shadow-none">
+                  <div [style.opacity]="loading ? '0' : '1'">
+                    <div class="card-header">
+                      <div class="row align-items-center justify-content-between">
+                        <div class="col-6 col-sm-auto d-flex align-items-center pr-0">
+                          <div id="DataTables_Table_0_filter"
+                               class="dataTables_filter d-sm-inline-block mr-2">
+                            <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchLeadSettings">
+                          </div>
+                        </div>
+                        <div class="col-6 col-sm-auto ml-auto text-right pl-0">
+                          <div class="d-none" id="orders-actions">
+                            <div class="input-group input-group-sm">
+                              <select class="custom-select cus"
+                                      aria-label="Bulk actions">
+                                <option selected="">Bulk actions</option>
+                                <option value="Refund">Refund</option>
+                                <option value="Delete">Delete</option>
+                              </select>
+                              <button class="btn btn-falcon-default ml-2"
+                                      type="button">
+                                Apply
+                              </button>
+                            </div>
+                          </div>
+                          <div id="dashboard-actions">
+                            <div class="btn-group">
+                              <button class="btn btn-success rounded" type="button" (click)="editActivity(0)">
+                                <span class="fas fa-plus"
+                                      data-fa-transform="shrink-3 down-2"></span>
+                                <span class="d-none d-sm-inline-block">
+                                  New Activity
+                                </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body pt-0">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="falcon-data-table table-responsive">
+                            <table class="table table-sm table-dashboard fs--1 data-table border-bottom">
+                              <thead class="bg-200">
+                                <tr>
+                                  <th class="sort pr-1 align-middle text-center cursor-pointer" (click)="sortType = 'name'; sortReverse = !sortReverse">
+                                    Name
+                                    <span *ngIf="sortType == 'name' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'name' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'name'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="sort pr-1 align-middle text-center cursor-pointer" (click)="sortType = 'color'; sortReverse = !sortReverse">
+                                    Color
+                                    <span *ngIf="sortType == 'color' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'color' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'color'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="sort pr-1 align-middle text-center cursor-pointer" (click)="sortType = 'defaultDuration'; sortReverse = !sortReverse">
+                                    Duration Day
+                                    <span *ngIf="sortType == 'defaultDuration' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'defaultDuration' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'defaultDuration'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="sort pr-1 align-middle text-center cursor-pointer" (click)="sortType = 'defualtDurationMinute'; sortReverse = !sortReverse">
+                                    Duration Hour
+                                    <span *ngIf="sortType == 'defualtDurationMinute' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'defualtDurationMinute' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'defualtDurationMinute'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="sort pr-1 align-middle text-center cursor-pointer" (click)="sortType = 'defualtDurationMinute'; sortReverse = !sortReverse">
+                                    Duration Minute
+                                    <span *ngIf="sortType == 'defualtDurationMinute' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'defualtDurationMinute' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'defualtDurationMinute'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="sort pr-1 align-middle text-center cursor-pointer" (click)="sortType = 'defaultReminder'; sortReverse = !sortReverse">
+                                    Reminder
+                                    <span *ngIf="sortType == 'defaultReminder' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'defaultReminder' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'defaultReminder'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="sort pr-1 align-middle text-center cursor-pointer" (click)="sortType = 'status'; sortReverse = !sortReverse">
+                                    Status
+                                    <span *ngIf="sortType == 'status' && !sortReverse">
+                                      <i class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span *ngIf="sortType == 'status' && sortReverse">
+                                      <i class="fas fa-sort-down"></i>
+                                    </span>
+                                    <span *ngIf="sortType != 'status'">
+                                      <i class="fas fa-sort"></i>
+                                    </span>
+                                  </th>
+                                  <th class="no-sort pr-1 align-middle data-table-row-action">
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="btn-reveal-trigger" *ngFor="let ld of leadSettingsData |filter: searchLeadSettings | orderBy:sortType:sortReverse | paginate: activityConfig">
+                                  <td class="align-middle text-center">
+                                    <a href="javascript:void(0)" (click)="editActivity(ld.id)">
+                                      {{ld.name}}
+                                    </a>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <div class="rounded-color text-center {{ld.color}}"></div>
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    {{ld.defaultDurationDay}}
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    {{ld.defaultDurationHour}}
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    {{ld.defaultDurationMinute}}
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    {{ld.defaultReminder}}
+                                  </td>
+                                  <td class="align-middle text-center">
+                                    <div class="custom-control custom-switch">
+                                      <input class="custom-control-input" type="checkbox" id="activitySwitch{{ld.id}}" [(ngModel)]="ld.status" (change)="changeStatus('activity', ld.id, ld.status,'changeStatus')" />
+                                      <label class="custom-control-label cursor-pointer" for="activitySwitch{{ld.id}}"></label>
+                                    </div>
+                                  </td>
+                                  <td class="align-middle white-space-nowrap">
+                                    <div class="dropdown text-sans-serif">
+                                      <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
+                                              type="button" id="dropdown0"
+                                              data-toggle="dropdown"
+                                              data-boundary="html"
+                                              aria-haspopup="true"
+                                              aria-expanded="false">
+                                        <span class="fas fa-ellipsis-h fs--1"></span>
+                                      </button>
+                                      <div class="dropdown-menu dropdown-menu-right border py-0"
+                                           aria-labelledby="dropdown0">
+                                        <div class="bg-white py-2">
+                                          <a class="dropdown-item" href="javascript:void(0)" (click)="editActivity(ld.id)">Edit</a>
+                                          <div class="dropdown-divider">
+                                          </div>
+                                          <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="modalDelete(ld.id,'activity','delete',[])">Delete</a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-template #p3="paginationApi" [id]="activityConfig.id" maxSize="5" (pageChange)="activityConfig.currentPage = $event" (pageBoundsCorrection)="activityConfig.currentPage = $event">
+                              <div *ngIf="p3.pages?.length > 0" class="row mx-1 align-items-center justify-content-center justify-content-md-between">
+                                <div class="col-auto mb-2 mb-sm-0">
+                                  <div class="dataTables_info">Showing {{((p3.getCurrent()-1)*activityConfig.itemsPerPage)+1}} to {{(p3.getCurrent()*activityConfig.itemsPerPage) < p3.getTotalItems() ? (p3.getCurrent()*activityConfig.itemsPerPage) : p3.getTotalItems()}} of {{p3.getTotalItems()}} entries</div>
+                                </div>
+                                <div class="col-auto">
+                                  <div class="paging_simple_numbers pt-3">
+                                    <ul class="pagination pagination-sm">
+                                      <li class="paginate_button page-item previous" [class.disabled]="p3.isFirstPage()">
+                                        <a class="page-link" (click)="p3.previous()"> < </a>
+                                      </li>
+                                      <li class="paginate_button page-item" *ngFor="let page of p3.pages" [class.active]="p3.getCurrent() === page.value">
+                                        <a class="page-link" (click)="p3.setCurrent(page.value)" *ngIf="p3.getCurrent() !== page.value">{{ page.label }}</a>
+                                        <a class="page-link" *ngIf="p3.getCurrent() === page.value">{{ page.label }}</a>
+                                      </li>
+                                      <li class="paginate_button page-item next" [class.disabled]="p3.isLastPage()">
+                                        <a class="page-link" (click)="p3.next()"> > </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </pagination-template>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ngx-loading [show]="loading"></ngx-loading>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Project Type-->
+<div class="modal fade" id="projectTypeModal" tabindex="-1" role="dialog" aria-labelledby="projectTypeModal" data-backdrop="static" data-keyboard="true"
+     aria-hidden="true">
+  <div class="modal-dialog activity-select-modal-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Project Type Details</h5>
+        <button class="close" type="button" aria-label="Close" data-dismiss="modal">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="projectTypeModalModal" id="projectTypeModalBody">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group" [ngClass]="{'invalid':!projectTypeObj.name}">
+              <label for="projectTypeName">Name</label>
+              <input class="form-control" id="projectTypeName" type="text" [(ngModel)]="projectTypeObj.name" required="required" appTrimLeft autocomplete="off"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary" id="btnprojectType" type="button" [disabled]="!projectTypeObj.name" (click)="saveProjectType()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Source-->
+<div class="modal fade" id="sourceModal" tabindex="-1" role="dialog" aria-labelledby="sourceModal" data-backdrop="static" data-keyboard="true"
+     aria-hidden="true">
+  <div class="modal-dialog activity-select-modal-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Source Details</h5>
+        <button class="close" type="button" aria-label="Close" data-dismiss="modal">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="sourceModal" id="sourceModalBody">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group" [ngClass]="{'invalid':!sourceObj.name}">
+              <label for="sourceName">Name</label>
+              <input class="form-control" id="sourceName" type="text" [(ngModel)]="sourceObj.name" required="required" appTrimLeft />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary" id="btnSource" type="button" [disabled]="!sourceObj.name" (click)="saveSource()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Activity-->
+<div class="modal fade" id="activityModal" tabindex="-1" role="dialog" aria-labelledby="activityModal" data-backdrop="static" data-keyboard="true"
+     aria-hidden="true">
+  <div class="modal-dialog activity-select-modal-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Activity Details</h5>
+        <button class="close" type="button" aria-label="Close" data-dismiss="modal">
+          <span class="font-weight-light" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" name="activityModalModal" id="activityModalModalBody">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':!activityObj.name}">
+              <label for="activity">Name</label>
+              <input class="form-control" id="activity" type="text" [(ngModel)]="activityObj.name" required="required" appTrimLeft autocomplete="off"/>
+            </div>
+          </div>
+          <div class="col-md-6 col-12">
+            <div class="form-group" [ngClass]="{'invalid':activityObj.color==0}">
+              <label for="color">Color</label>
+              <select class="form-control" id="color" name="color" [(ngModel)]="activityObj.color">
+                <option [ngValue]="0">Choose</option>
+                <option [ngValue]="c.id" *ngFor="let c of activityObj.colorList">{{c.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="durationDay">Duration</label>
+              <select class="form-control" id="durationDay" [(ngModel)]="activityObj.defaultDurationDay">
+                <option [ngValue]="day.id" *ngFor="let day of durationDay">{{day.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="durationHour">Hours</label>
+              <select class="form-control" id="durationHour" [(ngModel)]="activityObj.defaultDurationHour">
+                <option [ngValue]="hour.id" *ngFor="let hour of durationHour">{{hour.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="durationMinute">Min</label>
+              <select class="form-control" id="durationMinute" [(ngModel)]="activityObj.defaultDurationMinute">
+                <option [ngValue]="minute.id" *ngFor="let minute of durationMinute">{{minute.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="reminder">Reminder</label>
+              <select class="form-control" id="reminder" [(ngModel)]="activityObj.defaultReminder">
+                <option value="0">None</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+        <button class="btn btn-primary" id="btnActivity" type="button" [disabled]="!activityObj.name || activityObj.color==0" (click)="saveActivity()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Delete-->
+<div class="modal fade z-index10000" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true" data-keyboard="true">
+  <div class="modal-dialog modal-dialog-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Delete</h5>
+        <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close"><span class="font-weight-light" aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure want to delete {{delCount}} item(s)?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary btn-sm" type="button" (click)="deleteItem(delId,delType,delType2,delBulkArray)">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
